@@ -3,7 +3,7 @@ package csulb.cecs323.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "theater")
+@Table(name = "theaters")
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,13 +12,12 @@ public class Theater {
     private String name;
     private String city;
     private String region;
-    private Enumerated country;
+    private Country country;
     private int numberOfScreens;
     private String phone;
-    //asdsadsada
     public Theater(){}
 
-    public Theater(String name, String city, String region, Enumerated country, int numberOfScreens, String phone)
+    public Theater(String name, String city, String region, Country country, int numberOfScreens, String phone)
     {
         this.name=name;
         this.city=city;
@@ -52,11 +51,11 @@ public class Theater {
         this.region = region;
     }
 
-    public Enumerated getCountry(){
+    public Country getCountry(){
         return country;
     }
 
-    public void setCountry(Enumerated country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 

@@ -20,8 +20,11 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
 
-    public Movie() {
-    }
+    @ManyToMany
+    @JoinTable(name = "movieshowings")
+    private List<Theater> theaters;
+
+    public Movie() { }
 
     public Movie(String title, MPAARating mpaaRating, int runtime, int budget, int grossEarnings, int tomatoMeter) {
         this.title = title;
@@ -40,5 +43,27 @@ public class Movie {
 
     public void setTitle(String title) { this.title = title; }
 
+    public GregorianCalendar getDateReleased() { return dateReleased; }
+
+    public void setDateReleased(GregorianCalendar dateReleased) { this.dateReleased = dateReleased; }
+
     public MPAARating getMpaaRating() { return mpaaRating; }
+
+    public void setMpaaRating(MPAARating mpaaRating) { this.mpaaRating = mpaaRating; }
+
+    public int getRuntime() { return runtime; }
+
+    public void setRuntime(int runtime) { this.runtime = runtime; }
+
+    public int getBudget() { return budget; }
+
+    public void setBudget(int budget) { this.budget = budget; }
+
+    public int getGrossEarnings() { return grossEarnings; }
+
+    public void setGrossEarnings(int grossEarnings) { this.grossEarnings = grossEarnings; }
+
+    public int getTomatoMeter() { return tomatoMeter; }
+
+    public void setTomatoMeter(int tomatoMeter) { this.tomatoMeter = tomatoMeter; }
 }
