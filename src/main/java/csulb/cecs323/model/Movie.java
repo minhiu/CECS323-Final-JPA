@@ -20,10 +20,6 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
 
-    @ManyToMany
-    @JoinTable(name = "movieshowings")
-    private List<Theater> theaters;
-
     public Movie() { }
 
     public Movie(String title, MPAARating mpaaRating, int runtime, int budget, int grossEarnings, int tomatoMeter) {
