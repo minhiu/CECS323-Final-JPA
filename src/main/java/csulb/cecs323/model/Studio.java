@@ -4,16 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="studios")
-public class Studios {
+public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studioID;
     private String name;
     private String country;
 
-    public Studios(){
+    public Studio(){
     }
 
-    public Studios(long studioID, String name, String country){
+    public Studio(long studioID, String name, String country){
         this.studioID = studioID;
         this.name = name;
         this.country = country;
