@@ -15,7 +15,7 @@ public class Theater {
     private Enumerated country;
     private int numberOfScreens;
     private String phone;
-
+    //asdsadsada
     public Theater(){}
 
     public Theater(String name, String city, String region, Enumerated country, int numberOfScreens, String phone)
