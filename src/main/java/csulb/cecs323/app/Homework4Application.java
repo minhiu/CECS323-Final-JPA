@@ -12,7 +12,6 @@
 
 package csulb.cecs323.app;
 
-import csulb.cecs323.model.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -60,15 +59,7 @@ public class Homework4Application {
     * Create and persist a Student object to the database.
     */
    public void createStudentEntity() {
-      LOGGER.fine("Creating Student object");
 
-      Student graceHopper = new Student();
-      graceHopper.setFirstName("Grace");
-      graceHopper.setLastName("Hopper");
-      graceHopper.setGpa(4.0);
-
-      LOGGER.fine("Persisting Student object to DB");
-      this.entityManager.persist(graceHopper);
    }
 
 }
