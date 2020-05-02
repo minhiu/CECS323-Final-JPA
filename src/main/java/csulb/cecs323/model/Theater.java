@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "theaters")
@@ -15,6 +16,9 @@ public class Theater {
     private Country country;
     private int numberOfScreens;
     private String phone;
+    @OneToMany(mappedBy = "owner")
+    private List<MovieShowing> movieShowings;
+
     public Theater(){}
 
     public Theater(String name, String city, String region, Country country, int numberOfScreens, String phone)
