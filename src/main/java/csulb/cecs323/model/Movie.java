@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 @Table(name="movies")
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String title;
     private MPAARating mpaaRating;
@@ -19,6 +19,12 @@ public class Movie {
 
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieShowing> movieshowings;
+
+    @OneToOne
+    private Movie sequel;
 
     public Movie() { }
 
