@@ -12,10 +12,13 @@
 
 package csulb.cecs323.app;
 
+import csulb.cecs323.model.*;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 /**
@@ -61,4 +64,37 @@ public class Homework4Application {
 
    }
 
-}
+   private static final Movie[] INITIAL_MOVIES = new Movie[]{
+           new Movie("Ratatouille", new GregorianCalendar(2005, 0, 1), MPAARating.G, 111, 150000000, 620700000, 96),
+           new Movie("Up", new GregorianCalendar(2009, 5, 29), MPAARating.G, 96, 175000000, 735100000, 98),
+           new Movie("The Incredibles", new GregorianCalendar(2004, 11, 5), MPAARating.G, 116, 92000000, 633000000, 97),
+           new Movie("The Dark Knight", new GregorianCalendar(2008, 7, 18), MPAARating.PG13, 152, 180000000, 1005000000, 94),
+           new Movie("Joker", new GregorianCalendar(2019, 10, 4), MPAARating.R, 122, 62500000, 1074000000, 68),
+           new Movie("Iron Man",new GregorianCalendar(2008,5,2), MPAARating.PG13, 126, 1400000, 5853000, 94),
+           new Movie("Thor", new GregorianCalendar(2011,5,6), MPAARating.PG13, 114, 1500000, 4493000, 77),
+           new Movie("Doctor Strange", new GregorianCalendar(2016, 10, 20), MPAARating.PG13, 115, 2366000, 6777000, 89),
+           new Movie("Black Panther", new GregorianCalendar(2018, 2, 16), MPAARating.PG13, 134, 2000000, 1347000000, 97),
+           new Movie("Captain Marvel", new GregorianCalendar(2019, 3, 8), MPAARating.PG13, 124, 1750000, 1128000000, 78)
+   };
+
+   private static final Studio[] INITIAL_STUDIOS = new Studio[]{
+           new Studio("Marvel Studios", Country.US),
+           new Studio("Warner Bros Studios", Country.US),
+           new Studio("Pixar Studios", Country.US)
+   };
+
+   private static final Theater[] INITIAL_THEATERS = new Theater[]{
+        new Theater("AMC Southbay Galleria", "Redondo Beach","Western", Country.US,16,"3107937477"),
+        new Theater("Beckenham", "Beckenham","Euro", Country.UK,6,"08001383315"),
+        new Theater("ArcLight Cinemas - Hollywood", "Hollywood","Western", Country.US,15,"3236152550"),
+        new Theater("Revue Cinema", "Toronto","Western", Country.CA,1,"4165319950"),
+        new Theater("Toho Cinemas Roppongi Hills", "Tokyo","Eastern", Country.JP,5,"81357756090")
+   };
+
+   private static final MovieShowing[] INITIAL_MOVIESHOWING = new MovieShowing[]{
+           new MovieShowing(new GregorianCalendar(2008, 5, 2), new GregorianCalendar(2008, 8, 2)), //iron man
+           new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 16)), //black panther
+           new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 1)), //thor
+           new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 20)), //dr. strange
+           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)), //captain marvel
+   };

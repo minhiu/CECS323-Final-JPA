@@ -30,8 +30,9 @@ public class Movie {
     private List<Studio> studios;
     public Movie() { }
 
-    public Movie(String title, MPAARating mpaaRating, int runtime, int budget, int grossEarnings, int tomatoMeter) {
+    public Movie(String title, GregorianCalendar dateReleased, MPAARating mpaaRating, int runtime, int budget, int grossEarnings, int tomatoMeter) {
         this.title = title;
+        this.dateReleased = dateReleased;
         this.mpaaRating = mpaaRating;
         this.runtime = runtime;
         this.budget = budget;
