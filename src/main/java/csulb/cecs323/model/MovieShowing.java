@@ -4,18 +4,20 @@ import javax.persistence.*;
 import java.util.GregorianCalendar;
 
 @Entity
-@IdClass(MovieShowingPK.class)
 @Table(name="movieshowings")
 public class MovieShowing {
 
-    @Id
+    @EmbeddedId
+    private MovieShowingPK key;
+
+    @MapsId("movieId")
+    @JoinColumn(name= "movie_ID", referencedColumnName = "id")
     @ManyToOne
-    @JoinColumn(name= "movieID", referencedColumnName = "id")
     private Movie movie;
 
-    @Id
+    @MapsId("theaterID")
+    @JoinColumn(name= "theater_ID", referencedColumnName = "id")
     @ManyToOne
-    @JoinColumn(name= "theaterID", referencedColumnName = "id")
     private Theater theater;
 
 
