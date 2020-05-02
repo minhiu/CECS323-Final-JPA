@@ -8,7 +8,7 @@ import java.util.List;
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     private String name;
     private String city;

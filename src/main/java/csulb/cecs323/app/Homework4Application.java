@@ -61,7 +61,6 @@ public class Homework4Application {
     * Create and persist a Student object to the database.
     */
    public void createStudentEntity() {
-
    }
 
    private static final Movie[] INITIAL_MOVIES = new Movie[]{

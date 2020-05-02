@@ -28,6 +28,7 @@ public class Movie {
 
     @ManyToMany(mappedBy = "movies")
     private List<Studio> studios;
+
     public Movie() { }
 
     public Movie(String title, GregorianCalendar dateReleased, MPAARating mpaaRating, int runtime, int budget, int grossEarnings, int tomatoMeter) {

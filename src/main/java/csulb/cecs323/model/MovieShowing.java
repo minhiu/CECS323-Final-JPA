@@ -15,7 +15,7 @@ public class MovieShowing {
     @ManyToOne
     private Movie movie;
 
-    @MapsId("theaterID")
+    @MapsId("theaterId")
     @JoinColumn(name= "theater_ID", referencedColumnName = "id")
     @ManyToOne
     private Theater theater;

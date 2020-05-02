@@ -4,9 +4,11 @@
 			 version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 	<persistence-unit name="homework4_PU" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>  <!-- See: http://tomee.apache.org/jpa-concepts.html -->
-
-		<class>csulb.cecs323.model.Movie</class>
 		<!-- TODO: Add other classes annotated as Entity and thus whose objects are to be persisted in the database -->
+		<class>csulb.cecs323.model.Movie</class>
+		<class>csulb.cecs323.model.MovieShowing</class>
+		<class>csulb.cecs323.model.Studio</class>
+		<class>csulb.cecs323.model.Theater</class>
 
 		<properties>
 			<!-- Derby Embedded Driver -->
