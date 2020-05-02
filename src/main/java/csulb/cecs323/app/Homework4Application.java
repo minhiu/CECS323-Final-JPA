@@ -70,8 +70,8 @@ public class Homework4Application {
            new Movie("The Incredibles", new GregorianCalendar(2004, 11, 5), MPAARating.G, 116, 92000000, 633000000, 97),
            new Movie("The Dark Knight", new GregorianCalendar(2008, 7, 18), MPAARating.PG13, 152, 180000000, 1005000000, 94),
            new Movie("Joker", new GregorianCalendar(2019, 10, 4), MPAARating.R, 122, 62500000, 1074000000, 68),
-           new Movie("Iron Man",new GregorianCalendar(2008,5,2), MPAARating.PG13, 126, 1400000, 5853000, 94),
-           new Movie("Thor", new GregorianCalendar(2011,5,6), MPAARating.PG13, 114, 1500000, 4493000, 77),
+           new Movie("Iron Man", new GregorianCalendar(2008, 5, 2), MPAARating.PG13, 126, 1400000, 5853000, 94),
+           new Movie("Thor", new GregorianCalendar(2011, 5, 6), MPAARating.PG13, 114, 1500000, 4493000, 77),
            new Movie("Doctor Strange", new GregorianCalendar(2016, 10, 20), MPAARating.PG13, 115, 2366000, 6777000, 89),
            new Movie("Black Panther", new GregorianCalendar(2018, 2, 16), MPAARating.PG13, 134, 2000000, 1347000000, 97),
            new Movie("Captain Marvel", new GregorianCalendar(2019, 3, 8), MPAARating.PG13, 124, 1750000, 1128000000, 78)
@@ -84,11 +84,11 @@ public class Homework4Application {
    };
 
    private static final Theater[] INITIAL_THEATERS = new Theater[]{
-        new Theater("AMC Southbay Galleria", "Redondo Beach","Western", Country.US,16,"3107937477"),
-        new Theater("Beckenham", "Beckenham","Euro", Country.UK,6,"08001383315"),
-        new Theater("ArcLight Cinemas - Hollywood", "Hollywood","Western", Country.US,15,"3236152550"),
-        new Theater("Revue Cinema", "Toronto","Western", Country.CA,1,"4165319950"),
-        new Theater("Toho Cinemas Roppongi Hills", "Tokyo","Eastern", Country.JP,5,"81357756090")
+           new Theater("AMC Southbay Galleria", "Redondo Beach", "Western", Country.US, 16, "3107937477"),
+           new Theater("Beckenham", "Beckenham", "Euro", Country.UK, 6, "08001383315"),
+           new Theater("ArcLight Cinemas - Hollywood", "Hollywood", "Western", Country.US, 15, "3236152550"),
+           new Theater("Revue Cinema", "Toronto", "Western", Country.CA, 1, "4165319950"),
+           new Theater("Toho Cinemas Roppongi Hills", "Tokyo", "Eastern", Country.JP, 5, "81357756090")
    };
 
    private static final MovieShowing[] INITIAL_MOVIESHOWING = new MovieShowing[]{
@@ -96,5 +96,6 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 16)), //black panther
            new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 1)), //thor
            new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 20)), //dr. strange
-           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)), //captain marvel
+           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)) //captain marvel
    };
+}
