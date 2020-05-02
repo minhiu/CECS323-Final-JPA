@@ -74,13 +74,15 @@ public class Homework4Application {
            new Movie("Thor", new GregorianCalendar(2011, 5, 6), MPAARating.PG13, 114, 1500000, 4493000, 77),
            new Movie("Doctor Strange", new GregorianCalendar(2016, 10, 20), MPAARating.PG13, 115, 2366000, 6777000, 89),
            new Movie("Black Panther", new GregorianCalendar(2018, 2, 16), MPAARating.PG13, 134, 2000000, 1347000000, 97),
-           new Movie("Captain Marvel", new GregorianCalendar(2019, 3, 8), MPAARating.PG13, 124, 1750000, 1128000000, 78)
+           new Movie("Captain Marvel", new GregorianCalendar(2019, 3, 8), MPAARating.PG13, 124, 1750000, 1128000000, 78),
+           new Movie("Murder on the Orient Express", new GregorianCalendar(2017, 11, 10), MPAARating.PG13, 114, 55000000, 352800000, 61)
    };
 
    private static final Studio[] INITIAL_STUDIOS = new Studio[]{
            new Studio("Marvel Studios", Country.US),
            new Studio("Warner Bros Studios", Country.US),
-           new Studio("Pixar Studios", Country.US)
+           new Studio("Pixar Studios", Country.US),
+           new Studio("Longcross Studios", Country.UK)
    };
 
    private static final Theater[] INITIAL_THEATERS = new Theater[]{
@@ -101,7 +103,7 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
            new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
            new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
-           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)) //the joker
-
+           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
+           new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
    };
 }
