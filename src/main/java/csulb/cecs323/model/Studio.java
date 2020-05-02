@@ -18,8 +18,7 @@ public class Studio {
     public Studio(){
     }
 
-    public Studio(long studioID, String name, Country country){
-        this.studioID = studioID;
+    public Studio(String name, Country country){
         this.name = name;
         this.country = country;
     }
