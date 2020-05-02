@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="studios")
@@ -9,6 +10,11 @@ public class Studio {
     private Long studioID;
     private String name;
     private String country;
+
+    @OneToMany(mappedBy = "owner")
+
+    @JoinTable(name = "moviestudios")
+    private List<Movie> movies;
 
     public Studio(){
     }
