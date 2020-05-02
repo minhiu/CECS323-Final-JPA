@@ -11,8 +11,7 @@ public class Studio {
     private String name;
     private String country;
 
-    @OneToMany(mappedBy = "owner")
-
+    @ManyToMany
     @JoinTable(name = "moviestudios")
     private List<Movie> movies;
 
