@@ -20,7 +20,7 @@ public class MovieShowing {
     private Theater theater;
 
     @ManyToOne
-    private Movie Movie;
+    private Movie movie;
 
     public MovieShowing(GregorianCalendar openingDate, GregorianCalendar dateOfLastShow)
     {
