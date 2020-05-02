@@ -9,16 +9,16 @@ public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studioID;
     private String name;
-    private String country;
+    private Country country;
 
     @ManyToMany
-    @JoinTable(name = "moviestudios")
+    @JoinTable(name = "movietudios")
     private List<Movie> movies;
 
     public Studio(){
     }
 
-    public Studio(long studioID, String name, String country){
+    public Studio(long studioID, String name, Country country){
         this.studioID = studioID;
         this.name = name;
         this.country = country;
@@ -32,7 +32,7 @@ public class Studio {
 
     public void setName(String name) { this.name = name; }
 
-    public String getCountry() { return country; }
+    public Country getCountry() { return country; }
 
-    public void setCountry(String country) { this.country = country; }
+    public void setCountry(Country country) { this.country = country; }
 }
