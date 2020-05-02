@@ -9,39 +9,24 @@ import java.util.GregorianCalendar;
 public class MovieShowing {
 
     @Id
-    private long movieId;
+    @ManyToOne
+    @JoinColumn(name= "movieID", referencedColumnName = "id")
+    private Movie movie;
+
     @Id
-    private long theaterId;
+    @ManyToOne
+    @JoinColumn(name= "theaterID", referencedColumnName = "id")
+    private Theater theater;
+
 
     private GregorianCalendar openingDate;
     private GregorianCalendar dateOfLastShow;
 
-    @ManyToOne
-    private Theater theater;
-
-    @ManyToOne
-    private Movie movie;
 
     public MovieShowing(GregorianCalendar openingDate, GregorianCalendar dateOfLastShow)
     {
         this.openingDate=openingDate;
         this.dateOfLastShow=dateOfLastShow;
-    }
-
-    public long getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(long movieId) {
-        this.movieId = movieId;
-    }
-
-    public long getTheaterId() {
-        return theaterId;
-    }
-
-    public void setTheaterId(long theaterId) {
-        this.theaterId = theaterId;
     }
 
     public void setDateOfLastShow(GregorianCalendar dateOfLastShow) {

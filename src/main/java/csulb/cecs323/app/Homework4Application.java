@@ -96,11 +96,11 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 16)), //black panther
            new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 1)), //thor
            new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 20)), //dr. strange
-           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)) //captain marvel
-           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)) //ratatouille
-           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)) //up
-           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)) //the incredibles
-           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)) //the dark knight
+           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)), //captain marvel
+           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)), //ratatouille
+           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
+           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
+           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
            new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)) //the joker
 
    };

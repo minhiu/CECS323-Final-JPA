@@ -16,7 +16,7 @@ public class Theater {
     private Country country;
     private int numberOfScreens;
     private String phone;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "theater")
     private List<MovieShowing> movieShowings;
 
     public Theater(){}
