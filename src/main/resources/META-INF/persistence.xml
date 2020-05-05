@@ -10,7 +10,7 @@
 		<class>csulb.cecs323.model.Studio</class>
 		<class>csulb.cecs323.model.Theater</class>
 		<!-- TODO: Add other classes annotated as Entity and thus whose objects are to be persisted in the database -->
-
+		<!-- Derby Embedded dasdsadDriver -->
 		<properties>
 			<!-- Derby Embedded Driver -->
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
