@@ -186,12 +186,78 @@ public class Homework4Application {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
       // ****************END OF Movie-->MovieShowing****************
-      
-      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
-         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
-            System.out.println(movie.getTitle());
+
+      // ****************MAP Theatre->MovieShowing****************
+      List<MovieShowing> mainMovieShowingList0 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList1 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList2 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList3 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList4 = new ArrayList<MovieShowing>();
+
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i-> {
+         if (i == 0) {
+            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 1){
+            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 2 ){
+            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 3){
+            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 4) {
+            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 5) {
+            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 6) {
+            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 7) {
+            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 8) {
+            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 9) {
+            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
          }
-      }
+      });
+      INITIAL_THEATERS[0].setMovieShowings(mainMovieShowingList0);
+      INITIAL_THEATERS[1].setMovieShowings(mainMovieShowingList1);
+      INITIAL_THEATERS[2].setMovieShowings(mainMovieShowingList2);
+      INITIAL_THEATERS[3].setMovieShowings(mainMovieShowingList3);
+      INITIAL_THEATERS[4].setMovieShowings(mainMovieShowingList4);
+      // ****************END OF Theater-->MovieShowing****************
+
+      // ****************MAP MovieShowing-->Theater****************
+      IntStream.range(0, INITIAL_THEATERS.length).forEach(i -> {
+         if (i == 0) {
+            INITIAL_MOVIESHOWING[0].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[4].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 1) {
+            INITIAL_MOVIESHOWING[6].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[8].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 2) {
+            INITIAL_MOVIESHOWING[1].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[3].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 3) {
+            INITIAL_MOVIESHOWING[5].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[7].setTheater(INITIAL_THEATERS[i]);
+         } else {
+            INITIAL_MOVIESHOWING[2].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[9].setTheater(INITIAL_THEATERS[i]);
+         }
+      });
+      // ****************END OF MovieShowing-->Theater****************
+
+
+
+
+
+
+
+
+
+//      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
+//         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
+//            System.out.println(movie.getTitle());
+//         }
+//      }
 
 
       for (Movie movie : INITIAL_MOVIES) {
