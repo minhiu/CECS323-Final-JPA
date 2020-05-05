@@ -84,3 +84,4 @@ src/main/resources/META-INF/persistence.xml
 src/main/java/csulb/cecs323/model/Student.java
 src/main/java/csulb/cecs323/model/Student.java
 src/main/resources/META-INF/persistence.xml
+src/main/resources/META-INF/persistence.xml
