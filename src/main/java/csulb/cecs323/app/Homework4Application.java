@@ -67,6 +67,7 @@ public class Homework4Application {
     * Create and persist a Student object to the database.
     */
    public void createStudentEntity() {
+
    }
 
    private void loadInitialData()
