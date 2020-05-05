@@ -138,7 +138,6 @@ public class Homework4Application {
          }
       }
 
->>>>>>> 231255404dd648ec2d639226e7a5c44f860926d6
 
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);

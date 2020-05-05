@@ -79,17 +79,6 @@ pom.xml.tag
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-<<<<<<< HEAD
-src/main/resources/META-INF/persistence.xml
-src/main/resources/META-INF/persistence.xml
-src/main/java/csulb/cecs323/model/Student.java
-src/main/java/csulb/cecs323/model/Student.java
-src/main/resources/META-INF/persistence.xml
-src/main/resources/META-INF/persistence.xml
-src/main/resources/META-INF/persistence.xml
-src/main/java/csulb/cecs323/app/Homework4Application.java
-=======
 
 # Persistence file
 *.xml
->>>>>>> 231255404dd648ec2d639226e7a5c44f860926d6
