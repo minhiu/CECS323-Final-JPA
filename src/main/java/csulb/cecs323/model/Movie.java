@@ -1,5 +1,7 @@
 package csulb.cecs323.model;
 
+import org.graalvm.compiler.asm.amd64.AMD64Assembler;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Movie {
     private GregorianCalendar dateReleased;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
-    private List<MovieShowing> movieshowings;
+    private List<MovieShowing> movieshowings = new ArrayList<MovieShowing>();
 
     @OneToOne
     private Movie sequel;
@@ -78,11 +80,15 @@ public class Movie {
 
     public void setStudios(List<Studio> studios) { this.studios = studios; }
 
+    public void addStudio(Studio studio) { this.studios.add(studio); }
+
     public Movie getSequel() { return sequel; }
 
     public void setSequel(Movie sequel) { this.sequel = sequel; }
 
     public List<MovieShowing> getMovieShowings() { return movieshowings; }
 
-    public void setMovieshowings(List<MovieShowing> movieshowings) { this.movieshowings = movieshowings; }
+    public void setMovieShowings(List<MovieShowing> movieShowings) { this.movieshowings = movieShowings; }
+
+    public void addMovieShowing(MovieShowing movieShowing) { this.movieshowings.add(movieShowing); }
 }

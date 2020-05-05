@@ -158,7 +158,7 @@ public class Homework4Application {
 
       for(int i = 0 ; i < 5 ; i ++)
       {
-         INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
+         INITIAL_MOVIES[i].setMovieShowings(listOfMovies.get(i));
       }
       // ****************END OF Movie-->MovieShowing****************
 

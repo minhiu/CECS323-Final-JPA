@@ -87,4 +87,6 @@ public class Theater {
         this.movieShowings = movieShowings;
     }
 
+    public void addMovieShowing(MovieShowing movieShowing) { this.movieShowings.add(movieShowing); }
+
 }
