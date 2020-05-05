@@ -72,4 +72,16 @@ public class Movie {
     public int getTomatoMeter() { return tomatoMeter; }
 
     public void setTomatoMeter(int tomatoMeter) { this.tomatoMeter = tomatoMeter; }
+
+    public List<Studio> getStudios() { return studios; }
+
+    public void setStudios(List<Studio> studios) { this.studios = studios; }
+
+    public Movie getSequel() { return sequel; }
+
+    public void setSequel(Movie sequel) { this.sequel = sequel; }
+
+    public List<MovieShowing> getMovieShowings() { return movieshowings; }
+
+    public void setMovieshowings(List<MovieShowing> movieshowings) { this.movieshowings = movieshowings; }
 }
