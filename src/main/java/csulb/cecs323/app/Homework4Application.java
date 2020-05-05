@@ -64,6 +64,11 @@ public class Homework4Application {
 
    }
 
+   public void loadInitialData()
+   {
+
+   }
+
    private static final Movie[] INITIAL_MOVIES = new Movie[]{
            new Movie("Ratatouille", new GregorianCalendar(2005, 0, 1), MPAARating.G, 111, 150000000, 620700000, 96),
            new Movie("Up", new GregorianCalendar(2009, 5, 29), MPAARating.G, 96, 175000000, 735100000, 98),

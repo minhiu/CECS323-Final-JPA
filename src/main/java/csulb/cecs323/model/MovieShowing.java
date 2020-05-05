@@ -15,15 +15,17 @@ public class MovieShowing {
     @ManyToOne
     private Movie movie;
 
-    @MapsId("theaterID")
+    @MapsId("theaterId")
     @JoinColumn(name= "theater_ID", referencedColumnName = "id")
     @ManyToOne
     private Theater theater;
 
-
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar openingDate;
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateOfLastShow;
 
+    public MovieShowing(){}
 
     public MovieShowing(GregorianCalendar openingDate, GregorianCalendar dateOfLastShow)
     {
