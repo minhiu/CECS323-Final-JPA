@@ -157,24 +157,31 @@ public class Homework4Application {
 
       // ****************MAP MovieShowing->Movie****************
       //Linking movie showings to their movies. Setting a movie to each movie showing
-      for(int i = 0 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
+      }
+      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i-5]);
       }
       // ****************END OF MovieShowing->Movie****************
 
       // ****************MAP Movie->MovieShowing****************
       //Linking movies to their movie showings. Setting list of movieShowings for each movie
       List<List<MovieShowing>> listOfMovies = new ArrayList<>();
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          List<MovieShowing> mov = new ArrayList<>();
          mov.add(INITIAL_MOVIESHOWING[i]);
          listOfMovies.add(mov);
       }
+      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         listOfMovies.get(i-5).add(INITIAL_MOVIESHOWING[i]);
+      }
 
-
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
@@ -240,12 +247,17 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 1)), //thor
            new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 20)), //dr. strange
            new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)), //captain marvel
-           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)), //ratatouille
-           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
-           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
-           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
-           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
-           new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
+//           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)), //ratatouille
+//           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
+//           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
+//           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
+//           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
+//           new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
+           new MovieShowing(new GregorianCalendar(2008, 5, 2), new GregorianCalendar(2008, 8, 28)), //iron man
+           new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 6)), //black panther
+           new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 10)), //thor
+           new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 22)), //dr. strange
+           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 18)), //captain marvel
    };
 
 }
