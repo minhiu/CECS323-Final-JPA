@@ -15,20 +15,31 @@ public class MovieShowing {
     @ManyToOne
     private Movie movie;
 
-    @MapsId("theaterID")
+    @MapsId("theaterId")
     @JoinColumn(name= "theater_ID", referencedColumnName = "id")
     @ManyToOne
     private Theater theater;
 
-
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar openingDate;
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateOfLastShow;
 
+    public MovieShowing(){}
 
     public MovieShowing(GregorianCalendar openingDate, GregorianCalendar dateOfLastShow)
     {
         this.openingDate=openingDate;
         this.dateOfLastShow=dateOfLastShow;
+    }
+
+    public MovieShowing(MovieShowingPK key)
+    {
+        this.key= key;
+    }
+
+    public MovieShowingPK getMovieShowingKey() {
+        return key;
     }
 
     public void setDateOfLastShow(GregorianCalendar dateOfLastShow) {
@@ -45,5 +56,21 @@ public class MovieShowing {
 
     public GregorianCalendar getOpeningDate() {
         return openingDate;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
     }
 }

@@ -3,11 +3,11 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!--  See: http://tomee.apache.org/jpa-concepts.html  -->
 		<class>csulb.cecs323.model.Movie</class>
+		<class>csulb.cecs323.model.MovieShowing</class>
 		<class>csulb.cecs323.model.Studio</class>
 		<class>csulb.cecs323.model.Theater</class>
-		<!--
-         TODO: Add other classes annotated as Entity and thus whose objects are to be persisted in the database
-        -->
+		<!-- TODO: Add other classes annotated as Entity and thus whose objects are to be persisted in the database -->
+
 		<properties>
 			<!--  Derby Embedded Driver  -->
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

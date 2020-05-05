@@ -19,6 +19,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 /**
@@ -49,6 +50,11 @@ public class Homework4Application {
       EntityTransaction tx = manager.getTransaction();
 
       tx.begin();
+      try {
+         hw4application.loadInitialData();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
 
       hw4application.createStudentEntity();
 
@@ -62,6 +68,25 @@ public class Homework4Application {
     */
    public void createStudentEntity() {
 
+   }
+
+   private void loadInitialData()
+   {
+      // Connect Movie and Studio
+      
+
+      for (Movie movie : INITIAL_MOVIES) {
+         entityManager.persist(movie);
+      }
+      for (Theater theater : INITIAL_THEATERS) {
+         entityManager.persist(theater);
+      }
+      for (Studio studio : INITIAL_STUDIOS) {
+         entityManager.persist(studio);
+      }
+      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
+         entityManager.persist(movieShowing);
+      }
    }
 
    private static final Movie[] INITIAL_MOVIES = new Movie[]{

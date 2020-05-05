@@ -8,7 +8,7 @@ import java.util.List;
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     private String name;
     private String city;
@@ -78,4 +78,13 @@ public class Theater {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public List<MovieShowing> getMovieShowings() {
+        return movieShowings;
+    }
+
+    public void setMovieShowings(List<MovieShowing> movieShowings) {
+        this.movieShowings = movieShowings;
+    }
+
 }

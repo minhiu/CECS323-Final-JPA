@@ -6,11 +6,19 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 @Embeddable
 
-public class MovieShowingPK {
+public class MovieShowingPK implements Serializable{
     @Column(name="movie_ID")
     private long movieId;
     @Column(name="theater_ID")
     private long theaterId;
+
+    public MovieShowingPK(){}
+    public MovieShowingPK(long movieId, long theaterId)
+    {
+        this.movieId=movieId;
+        this.theaterId=theaterId;
+    }
+
 
     public boolean equals(Object object)
     {
@@ -21,6 +29,22 @@ public class MovieShowingPK {
         else{
             return false;
         }
+    }
+
+    public void setTheaterId(long theaterId) {
+        this.theaterId = theaterId;
+    }
+
+    public long getTheaterId() {
+        return theaterId;
+    }
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
+    }
+
+    public long getMovieId() {
+        return movieId;
     }
 
     public int hashCode()

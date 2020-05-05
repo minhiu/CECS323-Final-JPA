@@ -8,11 +8,13 @@ import java.util.List;
 public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studioID;
+
     private String name;
     private Country country;
 
     @ManyToMany
-    @JoinTable(name = "studios")
+    @JoinTable(name = "moviestudios")
+
     private List<Movie> movies;
 
     public Studio(){
