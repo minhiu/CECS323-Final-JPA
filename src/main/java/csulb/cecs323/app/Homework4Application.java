@@ -171,13 +171,13 @@ public class Homework4Application {
          mov.add(INITIAL_MOVIESHOWING[i]);
          listOfMovies.add(mov);
       }
-      // ****************END OF Movie-->MovieShowing****************
+
 
       for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
       {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
-
+      // ****************END OF Movie-->MovieShowing****************
 
 
       for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
