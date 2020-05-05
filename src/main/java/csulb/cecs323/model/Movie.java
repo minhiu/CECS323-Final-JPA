@@ -21,7 +21,7 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
     private List<MovieShowing> movieshowings;
 
     @OneToOne

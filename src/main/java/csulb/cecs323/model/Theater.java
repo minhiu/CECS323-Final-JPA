@@ -16,7 +16,7 @@ public class Theater {
     private Country country;
     private int numberOfScreens;
     private String phone;
-    @OneToMany(mappedBy = "theater")
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.PERSIST)
     private List<MovieShowing> movieShowings;
 
     public Theater(){}

@@ -70,27 +70,6 @@ public class Homework4Application {
     * Create and persist a Student object to the database.
     */
    public void createStudentEntity() {
-
-      //Linking movie showings to their movies. Setting a movie to each movie showing
-      for(int i = 0 ; i < INITIAL_MOVIESHOWING.length ; i ++)
-      {
-         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
-      }
-
-      //Linking movies to their movie showings. Setting list of movieShowings for each movie
-      List<List<MovieShowing>> listOfMovies = new ArrayList<>();
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i++)
-      {
-         List<MovieShowing> mov = new ArrayList<>();
-         mov.add(INITIAL_MOVIESHOWING[i]);
-         listOfMovies.add(mov);
-      }
-
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
-      {
-         INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
-      }
-
    }
 
    private void loadInitialData()
@@ -234,19 +213,12 @@ public class Homework4Application {
          } else if (i == 3) {
             INITIAL_MOVIESHOWING[5].setTheater(INITIAL_THEATERS[i]);
             INITIAL_MOVIESHOWING[7].setTheater(INITIAL_THEATERS[i]);
-         } else {
+         } else if (i == 4){
             INITIAL_MOVIESHOWING[2].setTheater(INITIAL_THEATERS[i]);
             INITIAL_MOVIESHOWING[9].setTheater(INITIAL_THEATERS[i]);
          }
       });
       // ****************END OF MovieShowing-->Theater****************
-
-
-
-
-
-
-
 
 
 //      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
@@ -265,10 +237,9 @@ public class Homework4Application {
       for (Studio studio : INITIAL_STUDIOS) {
          entityManager.persist(studio);
       }
-
-
-      // Connect Movie and Studio
-
+      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
+         entityManager.persist(movieShowing);
+      }
 
    }
 
