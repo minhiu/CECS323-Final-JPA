@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.GregorianCalendar;
 
 @Entity
-@Table(name="movies")
+@Table(name="movies", uniqueConstraints = @UniqueConstraint(columnNames = {"title", "dateReleased"}))
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

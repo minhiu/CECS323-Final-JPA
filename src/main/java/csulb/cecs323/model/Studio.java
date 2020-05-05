@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="studios")
+@Table(name="studios", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studioID;

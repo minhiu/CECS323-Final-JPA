@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "theaters")
+@Table(name = "theaters", uniqueConstraints = @UniqueConstraint(columnNames = "phone"))
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
