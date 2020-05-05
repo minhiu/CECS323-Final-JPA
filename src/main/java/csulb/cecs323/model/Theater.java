@@ -23,12 +23,12 @@ public class Theater {
 
     public Theater(String name, String city, String region, Country country, int numberOfScreens, String phone)
     {
-        this.name=name;
-        this.city=city;
-        this.region=region;
-        this.country=country;
-        this.numberOfScreens=numberOfScreens;
-        this.phone=phone;
+        this.name = name;
+        this.city = city;
+        this.region = region;
+        this.country = country;
+        this.numberOfScreens = numberOfScreens;
+        this.phone = phone;
     }
 
     public String getName() {

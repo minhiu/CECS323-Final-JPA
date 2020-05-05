@@ -18,9 +18,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 /**
  * A simple application to demonstrate how to persist an object in JPA.
@@ -72,8 +75,70 @@ public class Homework4Application {
 
    private void loadInitialData()
    {
-      // Connect Movie and Studio
-      
+
+      // *************** MAP STUDIOS -> MOVIES ***************
+      List<Movie> mainMovieList0 = new ArrayList<Movie>();
+      List<Movie> mainMovieList1 = new ArrayList<Movie>();
+      List<Movie> mainMovieList2 = new ArrayList<Movie>();
+      List<Movie> mainMovieList3 = new ArrayList<Movie>();
+      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
+         if (i >= 0 && i <= 2) {
+            mainMovieList0.add(INITIAL_MOVIES[i]);
+         } else if (i >= 3 && i <= 4) {
+            mainMovieList1.add(INITIAL_MOVIES[i]);
+         } else if (i >= 5 && i <= 9) {
+            mainMovieList2.add(INITIAL_MOVIES[i]);
+         } else {
+            mainMovieList3.add(INITIAL_MOVIES[i]);
+         }
+      });
+
+      INITIAL_STUDIOS[0].setMovies(mainMovieList0);
+      INITIAL_STUDIOS[1].setMovies(mainMovieList1);
+      INITIAL_STUDIOS[2].setMovies(mainMovieList2);
+      INITIAL_STUDIOS[3].setMovies(mainMovieList3);
+      // *************** END OF MAP STUDIOS -> MOVIES ***************
+
+
+      // *************** MAP MOVIES -> STUDIOS ***************
+      List<Studio> mainStudioList0 = new ArrayList<Studio>();
+      List<Studio> mainStudioList1 = new ArrayList<Studio>();
+      List<Studio> mainStudioList2 = new ArrayList<Studio>();
+      List<Studio> mainStudioList3 = new ArrayList<Studio>();
+
+      IntStream.range(0, INITIAL_STUDIOS.length).forEach(i -> {
+         if (i == 0) {
+            mainStudioList0.add(INITIAL_STUDIOS[0]);
+         } else if (i == 1) {
+            mainStudioList1.add(INITIAL_STUDIOS[1]);
+         } else if (i == 2) {
+            mainStudioList2.add(INITIAL_STUDIOS[2]);
+         } else if (i == 3) {
+            mainStudioList3.add(INITIAL_STUDIOS[3]);
+         }
+      });
+
+      List<Studio> temp;
+      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
+         if (i >= 0 && i <= 2) {
+            INITIAL_MOVIES[i].setStudios(mainStudioList0);
+         } else if (i >= 3 && i <= 4) {
+            INITIAL_MOVIES[i].setStudios(mainStudioList1);
+         } else if (i >= 5 && i <= 9) {
+            INITIAL_MOVIES[i].setStudios(mainStudioList2);
+         } else {
+            INITIAL_MOVIES[i].setStudios(mainStudioList3);
+         }
+      });
+
+      // *************** END OF MAP MOVIES -> STUDIOS ***************
+      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
+         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
+            System.out.println(movie.getTitle());
+         }
+      }
+
+>>>>>>> 231255404dd648ec2d639226e7a5c44f860926d6
 
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);
@@ -84,9 +149,13 @@ public class Homework4Application {
       for (Studio studio : INITIAL_STUDIOS) {
          entityManager.persist(studio);
       }
-      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
-         entityManager.persist(movieShowing);
-      }
+//      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
+//         entityManager.persist(movieShowing);
+//      }
+
+      // Connect Movie and Studio
+
+
    }
 
    private static final Movie[] INITIAL_MOVIES = new Movie[]{
@@ -131,4 +200,5 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
            new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
    };
+
 }
