@@ -97,6 +97,7 @@ public class Homework4Application {
 
    private void loadInitialData()
    {
+
       // *************** MAP STUDIOS -> MOVIES ***************
       List<Movie> mainMovieList0 = new ArrayList<Movie>();
       List<Movie> mainMovieList1 = new ArrayList<Movie>();
