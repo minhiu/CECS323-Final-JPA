@@ -91,8 +91,6 @@ public class Homework4Application {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
 
-
-
    }
 
    private void loadInitialData()
@@ -140,7 +138,6 @@ public class Homework4Application {
          }
       });
 
-      List<Studio> temp;
       IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
          if (i >= 0 && i <= 2) {
             INITIAL_MOVIES[i].setStudios(mainStudioList0);
@@ -152,7 +149,6 @@ public class Homework4Application {
             INITIAL_MOVIES[i].setStudios(mainStudioList3);
          }
       });
-
       // *************** END OF MAP MOVIES -> STUDIOS ***************
 
       // ****************MAP MovieShowing->Movie****************
@@ -197,9 +193,7 @@ public class Homework4Application {
       for (Studio studio : INITIAL_STUDIOS) {
          entityManager.persist(studio);
       }
-//      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
-//         entityManager.persist(movieShowing);
-//      }
+
 
       // Connect Movie and Studio
 
