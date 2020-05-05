@@ -33,6 +33,15 @@ public class MovieShowing {
         this.dateOfLastShow=dateOfLastShow;
     }
 
+    public MovieShowing(MovieShowingPK key)
+    {
+        this.key= key;
+    }
+
+    public MovieShowingPK getMovieShowingKey() {
+        return key;
+    }
+
     public void setDateOfLastShow(GregorianCalendar dateOfLastShow) {
         this.dateOfLastShow = dateOfLastShow;
     }
@@ -47,5 +56,21 @@ public class MovieShowing {
 
     public GregorianCalendar getOpeningDate() {
         return openingDate;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
     }
 }

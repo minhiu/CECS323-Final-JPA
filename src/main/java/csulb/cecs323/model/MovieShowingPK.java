@@ -31,6 +31,22 @@ public class MovieShowingPK implements Serializable{
         }
     }
 
+    public void setTheaterId(long theaterId) {
+        this.theaterId = theaterId;
+    }
+
+    public long getTheaterId() {
+        return theaterId;
+    }
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
+    }
+
+    public long getMovieId() {
+        return movieId;
+    }
+
     public int hashCode()
     {
         return (int)(movieId+theaterId);
