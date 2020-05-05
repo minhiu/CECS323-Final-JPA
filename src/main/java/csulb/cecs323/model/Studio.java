@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,7 @@ public class Studio {
 
     @ManyToMany
     @JoinTable(name = "moviestudios")
-
-    private List<Movie> movies;
+    private List<Movie> movies =  new ArrayList<Movie>();
 
     public Studio(){
     }

@@ -14,7 +14,7 @@
 			<!--
              TODO: Change the path to the database to one that is local to your computer!
             -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby:/path/to/DerbyDatabase/database;create=true"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:/Users/minhiu/Documents/Apache Derby/databases/theaters;create=true" />
 			<property name="javax.persistence.jdbc.user" value="app"/>
 			<!--  change to appropriate username  -->
 			<property name="javax.persistence.jdbc.password" value="app"/>

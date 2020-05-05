@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
 
@@ -27,7 +28,7 @@ public class Movie {
     private Movie sequel;
 
     @ManyToMany(mappedBy = "movies")
-    private List<Studio> studios;
+    private List<Studio> studios = new ArrayList<Studio>();
 
     public Movie() { }
 
