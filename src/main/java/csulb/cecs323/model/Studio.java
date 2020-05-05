@@ -12,7 +12,7 @@ public class Studio {
     private Country country;
 
     @ManyToMany
-    @JoinTable(name = "movietudios")
+    @JoinTable(name = "studios")
     private List<Movie> movies;
 
     public Studio(){
@@ -34,4 +34,8 @@ public class Studio {
     public Country getCountry() { return country; }
 
     public void setCountry(Country country) { this.country = country; }
+
+    public List<Movie> getMovies() { return movies; }
+
+    public void setMovies(List<Movie> movies) { this.movies = movies; }
 }
