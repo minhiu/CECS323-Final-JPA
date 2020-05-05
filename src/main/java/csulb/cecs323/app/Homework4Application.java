@@ -71,6 +71,28 @@ public class Homework4Application {
     */
    public void createStudentEntity() {
 
+      //Linking movie showings to their movies. Setting a movie to each movie showing
+      for(int i = 0 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
+      }
+
+      //Linking movies to their movie showings. Setting list of movieShowings for each movie
+      List<List<MovieShowing>> listOfMovies = new ArrayList<>();
+      for(int i = 0 ; i < INITIAL_MOVIES.length ; i++)
+      {
+         List<MovieShowing> mov = new ArrayList<>();
+         mov.add(INITIAL_MOVIESHOWING[i]);
+         listOfMovies.add(mov);
+      }
+
+      for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
+      {
+         INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
+      }
+
+
+
    }
 
    private void loadInitialData()
@@ -131,6 +153,33 @@ public class Homework4Application {
       });
 
       // *************** END OF MAP MOVIES -> STUDIOS ***************
+
+      // ****************MAP MovieShowing->Movie****************
+      //Linking movie showings to their movies. Setting a movie to each movie showing
+      for(int i = 0 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
+      }
+      // ****************END OF MovieShowing->Movie****************
+
+      // ****************MAP Movie->MovieShowing****************
+      //Linking movies to their movie showings. Setting list of movieShowings for each movie
+      List<List<MovieShowing>> listOfMovies = new ArrayList<>();
+      for(int i = 0 ; i < INITIAL_MOVIES.length ; i++)
+      {
+         List<MovieShowing> mov = new ArrayList<>();
+         mov.add(INITIAL_MOVIESHOWING[i]);
+         listOfMovies.add(mov);
+      }
+      // ****************END OF Movie-->MovieShowing****************
+
+      for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
+      {
+         INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
+      }
+
+
+
       for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
          for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
             System.out.println(movie.getTitle());
