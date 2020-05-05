@@ -179,8 +179,7 @@ public class Homework4Application {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
       // ****************END OF Movie-->MovieShowing****************
-
-
+      
       for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
          for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
             System.out.println(movie.getTitle());
