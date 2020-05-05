@@ -153,35 +153,107 @@ public class Homework4Application {
 
       // ****************MAP MovieShowing->Movie****************
       //Linking movie showings to their movies. Setting a movie to each movie showing
-      for(int i = 0 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
+      }
+      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i-5]);
       }
       // ****************END OF MovieShowing->Movie****************
 
       // ****************MAP Movie->MovieShowing****************
       //Linking movies to their movie showings. Setting list of movieShowings for each movie
       List<List<MovieShowing>> listOfMovies = new ArrayList<>();
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          List<MovieShowing> mov = new ArrayList<>();
          mov.add(INITIAL_MOVIESHOWING[i]);
          listOfMovies.add(mov);
       }
+      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
+      {
+         listOfMovies.get(i-5).add(INITIAL_MOVIESHOWING[i]);
+      }
 
-
-      for(int i = 0 ; i < INITIAL_MOVIES.length ; i ++)
+      for(int i = 0 ; i < 5 ; i ++)
       {
          INITIAL_MOVIES[i].setMovieshowings(listOfMovies.get(i));
       }
       // ****************END OF Movie-->MovieShowing****************
 
+      // ****************MAP Theatre->MovieShowing****************
+      List<MovieShowing> mainMovieShowingList0 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList1 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList2 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList3 = new ArrayList<MovieShowing>();
+      List<MovieShowing> mainMovieShowingList4 = new ArrayList<MovieShowing>();
 
-      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
-         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
-            System.out.println(movie.getTitle());
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i-> {
+         if (i == 0) {
+            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 1){
+            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 2 ){
+            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 3){
+            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 4) {
+            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 5) {
+            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 6) {
+            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 7) {
+            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 8) {
+            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 9) {
+            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
          }
-      }
+      });
+      INITIAL_THEATERS[0].setMovieShowings(mainMovieShowingList0);
+      INITIAL_THEATERS[1].setMovieShowings(mainMovieShowingList1);
+      INITIAL_THEATERS[2].setMovieShowings(mainMovieShowingList2);
+      INITIAL_THEATERS[3].setMovieShowings(mainMovieShowingList3);
+      INITIAL_THEATERS[4].setMovieShowings(mainMovieShowingList4);
+      // ****************END OF Theater-->MovieShowing****************
+
+      // ****************MAP MovieShowing-->Theater****************
+      IntStream.range(0, INITIAL_THEATERS.length).forEach(i -> {
+         if (i == 0) {
+            INITIAL_MOVIESHOWING[0].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[4].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 1) {
+            INITIAL_MOVIESHOWING[6].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[8].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 2) {
+            INITIAL_MOVIESHOWING[1].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[3].setTheater(INITIAL_THEATERS[i]);
+         } else if (i == 3) {
+            INITIAL_MOVIESHOWING[5].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[7].setTheater(INITIAL_THEATERS[i]);
+         } else {
+            INITIAL_MOVIESHOWING[2].setTheater(INITIAL_THEATERS[i]);
+            INITIAL_MOVIESHOWING[9].setTheater(INITIAL_THEATERS[i]);
+         }
+      });
+      // ****************END OF MovieShowing-->Theater****************
+
+
+
+
+
+
+
+
+
+//      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
+//         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
+//            System.out.println(movie.getTitle());
+//         }
+//      }
 
 
       for (Movie movie : INITIAL_MOVIES) {
@@ -235,12 +307,17 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 1)), //thor
            new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 20)), //dr. strange
            new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 8)), //captain marvel
-           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)), //ratatouille
-           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
-           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
-           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
-           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
-           new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
+//           new MovieShowing(new GregorianCalendar(2007, 6, 29), new GregorianCalendar(2007, 9, 29)), //ratatouille
+//           new MovieShowing(new GregorianCalendar(2009, 5, 29), new GregorianCalendar(2009, 8, 29)), //up
+//           new MovieShowing(new GregorianCalendar(2004, 11, 5), new GregorianCalendar(2005, 2, 5)), //the incredibles
+//           new MovieShowing(new GregorianCalendar(2008, 7, 18), new GregorianCalendar(2008, 10, 18)),//the dark knight
+//           new MovieShowing(new GregorianCalendar(2019, 10, 4), new GregorianCalendar(2020, 1, 4)), //the joker
+//           new MovieShowing(new GregorianCalendar(2017, 11, 10), new GregorianCalendar(2018, 2, 6)) // murder orient express
+           new MovieShowing(new GregorianCalendar(2008, 5, 2), new GregorianCalendar(2008, 8, 28)), //iron man
+           new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 6)), //black panther
+           new MovieShowing(new GregorianCalendar(2011, 5, 1), new GregorianCalendar(2011, 8, 10)), //thor
+           new MovieShowing(new GregorianCalendar(2016, 10, 20), new GregorianCalendar(2017, 1, 22)), //dr. strange
+           new MovieShowing(new GregorianCalendar(2019, 3, 8), new GregorianCalendar(2019, 6, 18)), //captain marvel
    };
 
 }
