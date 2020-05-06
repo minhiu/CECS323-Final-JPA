@@ -14,13 +14,11 @@ package csulb.cecs323.app;
 
 import csulb.cecs323.model.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -62,10 +60,22 @@ public class Homework4Application {
 
          hw4application.persistData();
 
-         hw4application.loadInitialData();
+         //hw4application.loadInitialData();
       } catch (Exception e) {
          e.printStackTrace();
       }
+
+
+
+      Query query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
+              " \t\tNumberOfCountries\n" +
+              " \tFROM movies m LEFT OUTER JOIN \n" +
+              "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
+              "ON m.id = ms.movie_Id \n" +
+              "\tGROUP by m.dateReleased, m.title\n");
+
+      List<Movie> results = query.getResultList();
+      System.out.println(results.get(0).getTitle());
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -204,7 +214,38 @@ public class Homework4Application {
    }
 
    private void loadInitialData() {
-      System.out.println("Welcome to JPA by Group 6");
+      Scanner input = new Scanner(System.in);
+      int userInput, userInputQuery;
+
+      do {
+         System.out.println("Welcome to JPA by Group 6\n" +
+                 "Please select an option below:\n" +
+                 "1. Run queries.\n" +
+                 "2. Insert data into tables.\n" +
+                 "3. Delete data from tables.\n" +
+                 "4. Exit the application.");
+
+         userInput = input.nextInt();
+
+         if (userInput == 1) {
+            System.out.println("Select one of these 3 queries:\n" +
+                    "1. Show all studios and the highest budget that they spent on a single movie.\n" +
+                    "2. Show all movies and the number of countries they are playing in\n" +
+                    "3. Show all studio(s) that produced a movie with the lowest TomatoMeter score");
+            userInputQuery = input.nextInt();
+            if (userInputQuery == 1) {
+
+            }
+         } else if (userInput == 2) {
+
+         } else if (userInput == 3) {
+
+         }  {
+
+         }
+      }
+
+      while (userInput != 4);
    }
 
    private static final Movie[] INITIAL_MOVIES = new Movie[]{
