@@ -53,13 +53,19 @@ public class Homework4Application {
       EntityTransaction tx = manager.getTransaction();
 
       tx.begin();
+
       try {
+         hw4application.createMovieEntity();
+         hw4application.createStudioEntity();
+         hw4application.createTheaterEntity();
+         hw4application.createMovieShowingEntity();
+
+         hw4application.persistData();
+
          hw4application.loadInitialData();
       } catch (Exception e) {
          e.printStackTrace();
       }
-
-      hw4application.createStudentEntity();
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -67,180 +73,124 @@ public class Homework4Application {
    }
 
    /**
-    * Create and persist a Student object to the database.
+    * Create Movie objects to the database.
     */
-   public void createStudentEntity() {
+   public void createMovieEntity() {
+      // MAPPING MOVIES TO STUDIOS
+      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
+         if (i >= 0 && i <= 2) {
+            INITIAL_MOVIES[i].addStudio(INITIAL_STUDIOS[0]);
+         } else if (i >= 3 && i <= 4) {
+            INITIAL_MOVIES[i].addStudio(INITIAL_STUDIOS[1]);
+         } else if (i >= 5 && i <= 9) {
+            INITIAL_MOVIES[i].addStudio(INITIAL_STUDIOS[2]);
+         } else {
+            INITIAL_MOVIES[i].addStudio(INITIAL_STUDIOS[3]);
+         }
+      });
+
+      // MAPPIING MOVIES TO MOVIESHOWINGS
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
+         if (i >= 0 && i <= 4) {
+            INITIAL_MOVIES[i].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         } else {
+            INITIAL_MOVIES[i-5].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         }
+      });
+   }
+
+   /**
+    * Create Studio objects to the database.
+    */
+   public void createStudioEntity() {
+      // MAPPING STUDIOS TO MOVIES
+      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
+         if (i >= 0 && i <= 2) {
+            INITIAL_STUDIOS[0].addMovie(INITIAL_MOVIES[i]);
+         } else if (i >= 3 && i <= 4) {
+            INITIAL_STUDIOS[1].addMovie(INITIAL_MOVIES[i]);
+         } else if (i >= 5 && i <= 9) {
+            INITIAL_STUDIOS[2].addMovie(INITIAL_MOVIES[i]);
+         } else {
+            INITIAL_STUDIOS[3].addMovie(INITIAL_MOVIES[i]);
+         }
+      });
+   }
+
+   /**
+    * Create Theater objects to the database.
+    */
+   public void createTheaterEntity() {
+      // MAPPING THEATERS TO MOVIESHOWINGS
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
+         if (i == 0 || i == 4) {
+            INITIAL_THEATERS[0].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 6 || i== 8) {
+            INITIAL_THEATERS[1].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 1 || i == 3) {
+            INITIAL_THEATERS[2].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 5 || i == 7) {
+            INITIAL_THEATERS[3].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         } else if (i == 2 || i == 9) {
+            INITIAL_THEATERS[4].addMovieShowing(INITIAL_MOVIESHOWING[i]);
+         }
+      });
+   }
+
+   /**
+    * Create Movie Showing objects to the database.
+    */
+   public void createMovieShowingEntity() {
+      // MAPPING MOVIESHOWINGS TO THEATERS
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
+         if (i == 0 || i == 4) {
+            INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[0]);
+         } else if (i == 6 || i == 8) {
+            INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[1]);
+         } else if (i == 1 || i == 3) {
+            INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[2]);
+         } else if (i == 5 || i == 7) {
+            INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[3]);
+         } else if (i == 2 || i == 9) {
+            INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[4]);
+         }
+      });
+
+      // MAPPING MOVIESHOWINGS TO MOVIES
+      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
+         if (i >= 0 && i <= 4) {
+            INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
+         } else {
+            INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i - 5]);
+         }
+      });
+   }
+
+   /**
+    * Persist all data
+    */
+   private void persistData() {
+      // PERSIST MOVIES
+      for (Movie movie : INITIAL_MOVIES) {
+         entityManager.persist(movie);
+      }
+      // PERSIST STUDIOS
+      for (Studio studio : INITIAL_STUDIOS) {
+         entityManager.persist(studio);
+      }
+      // PERSIST THEATERS
+      for (Theater theater : INITIAL_THEATERS) {
+         entityManager.persist(theater);
+      }
+      // PERSIST MOVIESHOWINGS
+      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
+         entityManager.persist(movieShowing);
+      }
    }
 
    private void loadInitialData()
    {
-
-      // *************** MAP STUDIOS -> MOVIES ***************
-      List<Movie> mainMovieList0 = new ArrayList<Movie>();
-      List<Movie> mainMovieList1 = new ArrayList<Movie>();
-      List<Movie> mainMovieList2 = new ArrayList<Movie>();
-      List<Movie> mainMovieList3 = new ArrayList<Movie>();
-      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
-         if (i >= 0 && i <= 2) {
-            mainMovieList0.add(INITIAL_MOVIES[i]);
-         } else if (i >= 3 && i <= 4) {
-            mainMovieList1.add(INITIAL_MOVIES[i]);
-         } else if (i >= 5 && i <= 9) {
-            mainMovieList2.add(INITIAL_MOVIES[i]);
-         } else {
-            mainMovieList3.add(INITIAL_MOVIES[i]);
-         }
-      });
-
-      INITIAL_STUDIOS[0].setMovies(mainMovieList0);
-      INITIAL_STUDIOS[1].setMovies(mainMovieList1);
-      INITIAL_STUDIOS[2].setMovies(mainMovieList2);
-      INITIAL_STUDIOS[3].setMovies(mainMovieList3);
-      // *************** END OF MAP STUDIOS -> MOVIES ***************
-
-
-      // *************** MAP MOVIES -> STUDIOS ***************
-      List<Studio> mainStudioList0 = new ArrayList<Studio>();
-      List<Studio> mainStudioList1 = new ArrayList<Studio>();
-      List<Studio> mainStudioList2 = new ArrayList<Studio>();
-      List<Studio> mainStudioList3 = new ArrayList<Studio>();
-
-      IntStream.range(0, INITIAL_STUDIOS.length).forEach(i -> {
-         if (i == 0) {
-            mainStudioList0.add(INITIAL_STUDIOS[0]);
-         } else if (i == 1) {
-            mainStudioList1.add(INITIAL_STUDIOS[1]);
-         } else if (i == 2) {
-            mainStudioList2.add(INITIAL_STUDIOS[2]);
-         } else if (i == 3) {
-            mainStudioList3.add(INITIAL_STUDIOS[3]);
-         }
-      });
-
-      IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
-         if (i >= 0 && i <= 2) {
-            INITIAL_MOVIES[i].setStudios(mainStudioList0);
-         } else if (i >= 3 && i <= 4) {
-            INITIAL_MOVIES[i].setStudios(mainStudioList1);
-         } else if (i >= 5 && i <= 9) {
-            INITIAL_MOVIES[i].setStudios(mainStudioList2);
-         } else {
-            INITIAL_MOVIES[i].setStudios(mainStudioList3);
-         }
-      });
-      // *************** END OF MAP MOVIES -> STUDIOS ***************
-
-      // ****************MAP MovieShowing->Movie****************
-      //Linking movie showings to their movies. Setting a movie to each movie showing
-      for(int i = 0 ; i < 5 ; i ++)
-      {
-         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
-      }
-      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
-      {
-         INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i-5]);
-      }
-      // ****************END OF MovieShowing->Movie****************
-
-      // ****************MAP Movie->MovieShowing****************
-      //Linking movies to their movie showings. Setting list of movieShowings for each movie
-      List<List<MovieShowing>> listOfMovies = new ArrayList<>();
-      for(int i = 0 ; i < 5 ; i ++)
-      {
-         List<MovieShowing> mov = new ArrayList<>();
-         mov.add(INITIAL_MOVIESHOWING[i]);
-         listOfMovies.add(mov);
-      }
-      for(int i = 5 ; i < INITIAL_MOVIESHOWING.length ; i ++)
-      {
-         listOfMovies.get(i-5).add(INITIAL_MOVIESHOWING[i]);
-      }
-
-      for(int i = 0 ; i < 5 ; i ++)
-      {
-         INITIAL_MOVIES[i].setMovieShowings(listOfMovies.get(i));
-      }
-      // ****************END OF Movie-->MovieShowing****************
-
-      // ****************MAP Theatre->MovieShowing****************
-      List<MovieShowing> mainMovieShowingList0 = new ArrayList<MovieShowing>();
-      List<MovieShowing> mainMovieShowingList1 = new ArrayList<MovieShowing>();
-      List<MovieShowing> mainMovieShowingList2 = new ArrayList<MovieShowing>();
-      List<MovieShowing> mainMovieShowingList3 = new ArrayList<MovieShowing>();
-      List<MovieShowing> mainMovieShowingList4 = new ArrayList<MovieShowing>();
-
-      IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i-> {
-         if (i == 0) {
-            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 1){
-            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 2 ){
-            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 3){
-            mainMovieShowingList2.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 4) {
-            mainMovieShowingList0.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 5) {
-            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 6) {
-            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 7) {
-            mainMovieShowingList3.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 8) {
-            mainMovieShowingList1.add(INITIAL_MOVIESHOWING[i]);
-         } else if (i == 9) {
-            mainMovieShowingList4.add(INITIAL_MOVIESHOWING[i]);
-         }
-      });
-      INITIAL_THEATERS[0].setMovieShowings(mainMovieShowingList0);
-      INITIAL_THEATERS[1].setMovieShowings(mainMovieShowingList1);
-      INITIAL_THEATERS[2].setMovieShowings(mainMovieShowingList2);
-      INITIAL_THEATERS[3].setMovieShowings(mainMovieShowingList3);
-      INITIAL_THEATERS[4].setMovieShowings(mainMovieShowingList4);
-      // ****************END OF Theater-->MovieShowing****************
-
-      // ****************MAP MovieShowing-->Theater****************
-      IntStream.range(0, INITIAL_THEATERS.length).forEach(i -> {
-         if (i == 0) {
-            INITIAL_MOVIESHOWING[0].setTheater(INITIAL_THEATERS[i]);
-            INITIAL_MOVIESHOWING[4].setTheater(INITIAL_THEATERS[i]);
-         } else if (i == 1) {
-            INITIAL_MOVIESHOWING[6].setTheater(INITIAL_THEATERS[i]);
-            INITIAL_MOVIESHOWING[8].setTheater(INITIAL_THEATERS[i]);
-         } else if (i == 2) {
-            INITIAL_MOVIESHOWING[1].setTheater(INITIAL_THEATERS[i]);
-            INITIAL_MOVIESHOWING[3].setTheater(INITIAL_THEATERS[i]);
-         } else if (i == 3) {
-            INITIAL_MOVIESHOWING[5].setTheater(INITIAL_THEATERS[i]);
-            INITIAL_MOVIESHOWING[7].setTheater(INITIAL_THEATERS[i]);
-         } else if (i == 4){
-            INITIAL_MOVIESHOWING[2].setTheater(INITIAL_THEATERS[i]);
-            INITIAL_MOVIESHOWING[9].setTheater(INITIAL_THEATERS[i]);
-         }
-      });
-      // ****************END OF MovieShowing-->Theater****************
-
-
-//      for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
-//         for (Movie movie : INITIAL_STUDIOS[i].getMovies()) {
-//            System.out.println(movie.getTitle());
-//         }
-//      }
-
-
-      for (Movie movie : INITIAL_MOVIES) {
-         entityManager.persist(movie);
-      }
-      for (Theater theater : INITIAL_THEATERS) {
-         entityManager.persist(theater);
-      }
-      for (Studio studio : INITIAL_STUDIOS) {
-         entityManager.persist(studio);
-      }
-      for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
-         entityManager.persist(movieShowing);
-      }
-
+      System.out.println("Welcome to JPA by Group 6");
    }
 
    private static final Movie[] INITIAL_MOVIES = new Movie[]{

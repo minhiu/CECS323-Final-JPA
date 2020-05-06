@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Theater {
     private int numberOfScreens;
     private String phone;
     @OneToMany(mappedBy = "theater", cascade = CascadeType.PERSIST)
-    private List<MovieShowing> movieShowings;
+    private List<MovieShowing> movieShowings = new ArrayList<MovieShowing>();
 
     public Theater(){}
 
