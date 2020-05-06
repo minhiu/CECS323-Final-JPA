@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Studio class to model studios of a Movie database; a Studio can produce many movies.
+ * In the case of Movies, the Studio can be one of many Studios that produces the same Movie.
+ */
 @Entity
 @Table(name="studios", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Studio {

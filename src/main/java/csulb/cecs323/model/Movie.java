@@ -4,7 +4,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.GregorianCalendar;
-
+/**
+ * Movie class to model movies of a Movie database; a Movie can be produced by many studios.
+ * In the case of studios, a Movie may be one of many movies produced by the same studio.
+ * A movie can be a sequel to at most one movie, and be a sequel to at most one movie.
+ * A movie can have many MovieShowings.
+ * In the case of MovieShowings, only one Movie can be shown by the same MovieShowing
+ */
 @Entity
 @Table(name="movies", uniqueConstraints = @UniqueConstraint(columnNames = {"title", "dateReleased"}))
 public class Movie {
