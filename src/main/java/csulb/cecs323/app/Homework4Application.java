@@ -15,11 +15,9 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -75,7 +73,6 @@ public class Homework4Application {
               "\tGROUP by m.dateReleased, m.title\n");
 
       List<Movie> results = query.getResultList();
-      System.out.println(results.get(0).getTitle());
 
       tx.commit();
       LOGGER.fine("End of Transaction");
