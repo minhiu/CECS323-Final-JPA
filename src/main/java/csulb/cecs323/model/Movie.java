@@ -91,3 +91,4 @@ public class Movie {
 
     public void addMovieShowing(MovieShowing movieShowing) { this.movieshowings.add(movieShowing); }
 }
+//

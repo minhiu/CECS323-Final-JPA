@@ -298,3 +298,4 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2017, 7, 7), new GregorianCalendar(2017, 10, 15))//SpiderMan: Homecoming
    };
 }
+//
