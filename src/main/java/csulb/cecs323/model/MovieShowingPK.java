@@ -19,7 +19,6 @@ public class MovieShowingPK implements Serializable{
         this.theaterId=theaterId;
     }
 
-
     public boolean equals(Object object)
     {
         if(object instanceof MovieShowingPK){
@@ -52,4 +51,3 @@ public class MovieShowingPK implements Serializable{
         return (int)(movieId+theaterId);
     }
 }
-//

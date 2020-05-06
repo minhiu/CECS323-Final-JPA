@@ -8,13 +8,14 @@ import java.util.List;
 @Table(name="studios", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studioID;
+    private Long id;
 
     private String name;
     private Country country;
 
     @ManyToMany
-    @JoinTable(name = "moviestudios")
+    @JoinTable(name = "moviestudios", joinColumns = @JoinColumn(name = "studio_Id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_Id"))
     private List<Movie> movies =  new ArrayList<Movie>();
 
     public Studio(){
@@ -25,9 +26,9 @@ public class Studio {
         this.country = country;
     }
 
-    public Long getStudioID() { return studioID; }
+    public Long getStudioID() { return id; }
 
-    public void setStudioID(Long studioID) { this.studioID = studioID; }
+    public void setStudioID(Long studioID) { this.id = studioID; }
 
     public String getName() { return name; }
 
@@ -43,4 +44,3 @@ public class Studio {
 
     public void addMovie(Movie movie) { this.movies.add(movie); }
 }
-//

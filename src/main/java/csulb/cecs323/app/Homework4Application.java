@@ -15,6 +15,7 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 
 import javax.persistence.*;
+import java.sql.SQLOutput;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -58,21 +59,10 @@ public class Homework4Application {
 
          hw4application.persistData();
 
-         //hw4application.loadInitialData();
+         hw4application.loadInitialData(manager);
       } catch (Exception e) {
          e.printStackTrace();
       }
-
-
-
-      Query query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
-              " \t\tNumberOfCountries\n" +
-              " \tFROM movies m LEFT OUTER JOIN \n" +
-              "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
-              "ON m.id = ms.movie_Id \n" +
-              "\tGROUP by m.dateReleased, m.title\n");
-
-      List<Movie> results = query.getResultList();
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -210,13 +200,15 @@ public class Homework4Application {
       }
    }
 
-   private void loadInitialData() {
+   private void loadInitialData(EntityManager manager) {
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
+      Query query;
+      List<Object[]> queryResults;
 
+      System.out.println("Welcome to JPA by Group 6!");
       do {
-         System.out.println("Welcome to JPA by Group 6\n" +
-                 "Please select an option below:\n" +
+         System.out.println("Please select an option below:\n" +
                  "1. Run queries.\n" +
                  "2. Insert data into tables.\n" +
                  "3. Delete data from tables.\n" +
@@ -230,15 +222,68 @@ public class Homework4Application {
                     "2. Show all movies and the number of countries they are playing in\n" +
                     "3. Show all studio(s) that produced a movie with the lowest TomatoMeter score");
             userInputQuery = input.nextInt();
-            if (userInputQuery == 1) {
 
+            if (userInputQuery == 1) {
+               query = manager.createNativeQuery("SELECT s.name, MAX (m.budget) AS Maximum_Spent\n" +
+                       "FROM Studios s LEFT OUTER JOIN \n" +
+                       "(moviestudios ms INNER JOIN movies m ON m.id = ms.movie_Id)\n" +
+                       "ON s.id = ms.studio_Id\n" +
+                       "   \tGROUP BY s.name");
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i += 2) {
+                     System.out.printf("%2s %19s %2s %2s $%2d", "Studio name: ", obj[i] ,
+                             "|" , " Highest budget: ", obj[i+1]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
+
+            } else if (userInputQuery == 2) {
+               query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
+                       " \t\tNumberOfCountries\n" +
+                       " \tFROM movies m LEFT OUTER JOIN \n" +
+                       "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
+                       "ON m.id = ms.movie_Id \n" +
+                       "\tGROUP by m.dateReleased, m.title\n");
+
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i+=3) {
+                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s", "Date released: ", obj[i] ,
+                             "|" , " Title: ", obj[i+1], "|", " Country played: ", obj[i+2]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
+            } else if (userInputQuery == 3) {
+               query = manager.createNativeQuery("SELECT s.name, m.title, m.tomatoMeter\n" +
+                       "\tFROM Studios s INNER JOIN MovieStudios ms \n" +
+                       "ON s.id = ms.studio_Id\n" +
+                       "\t\t      INNER JOIN movies m \n" +
+                       "ON m.id = ms.movie_Id \n" +
+                       "\tWHERE tomatoMeter = (SELECT MIN(tomatoMeter)\n" +
+                       "FROM movies)");
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i += 3) {
+                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s%%", "Studio: ", obj[i], "|", " Title: ",
+                             obj[i+1], "|", " Tomato Score: ", obj[i+2]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
             }
          } else if (userInput == 2) {
 
          } else if (userInput == 3) {
 
-         }  {
-
+         } else if (userInput == 4) {
+            System.out.println("Goodbye!");
+            System.exit(0);
          }
       }
 
@@ -298,4 +343,4 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2017, 7, 7), new GregorianCalendar(2017, 10, 15))//SpiderMan: Homecoming
    };
 }
-//
+
