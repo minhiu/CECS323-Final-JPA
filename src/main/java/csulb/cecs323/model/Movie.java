@@ -25,6 +25,7 @@ public class Movie {
     private List<MovieShowing> movieshowings = new ArrayList<MovieShowing>();
 
     @OneToOne
+    @JoinColumn(name="sequel", unique=true)
     private Movie sequel;
 
     @ManyToMany(mappedBy = "movies")
