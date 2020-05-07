@@ -59,7 +59,7 @@ public class Homework4Application {
          hw4application.createMovieShowingEntity();
          hw4application.persistData();
 
-         hw4application.loadInitialData(manager);
+         hw4application.start(manager);
 
       } catch (Exception e) {
          e.printStackTrace();
@@ -200,7 +200,6 @@ public class Homework4Application {
        */
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);
-         System.out.println(movie.getTitle());
       }
       /**
        * Persist all Studios
@@ -297,39 +296,50 @@ public class Homework4Application {
       int tomatoMeter;
       int numOfStudios;
       int studioSelect;
+
       System.out.print("Please enter a Movie Name: ");
       movieName = in.nextLine();
+
       System.out.print("Please enter the year it released: ");
       year = in.nextInt();
+
       System.out.print("Please enter the month it released: ");
       month = in.nextInt();
-      System.out.print("Please enter the day it released:");
+
+      System.out.print("Please enter the day it released: ");
       dayOfMoth = in.nextInt();
+
       System.out.print("Select an MPAARating \n"
               +"1. G\n" +
               "2. PG\n" +
               "3. PG13\n" +
               "4. R\n" +
               "5. NC17\n");
+
       ratingSelection = in.nextInt();
+
       if (ratingSelection == 1) rating = MPAARating.G;
       if (ratingSelection == 2) rating = MPAARating.PG;
       if (ratingSelection == 3) rating = MPAARating.PG13;
       if (ratingSelection == 4) rating = MPAARating.R;
       else rating = MPAARating.NC17;
-      System.out.print("Please enter the runtime for the movie:");
+
+      System.out.print("Please enter the runtime for the movie: ");
       runTime = in.nextInt();
-      System.out.print("Please enter the budget for the movie:");
+
+      System.out.print("Please enter the budget for the movie: ");
       budget = in.nextInt();
-      System.out.print("Please enter the gross earnings for the movie:");
+
+      System.out.print("Please enter the gross earnings for the movie: ");
       grossEarnings = in.nextInt();
-      System.out.print("Please enter the tomato meter rating for the movie:");
+
+      System.out.print("Please enter the tomato meter rating for the movie: ");
       tomatoMeter = in.nextInt();
+
       Movie newMovie = new Movie (movieName, new GregorianCalendar(year, month, dayOfMoth), rating, runTime, budget, grossEarnings, tomatoMeter);
       newMovie.addStudio (INITIAL_STUDIOS[0]);
 
       try {
-
          entityManager.persist(newMovie);
          query = manager.createNativeQuery("SELECT * FROM movies");
          List<Object[]> list = query.getResultList();
@@ -345,9 +355,12 @@ public class Homework4Application {
                System.out.println((i+1) + ". " + INITIAL_STUDIOS[i].getName());
             }
             System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
+
             studioSelect = in.nextInt();
+
             if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
                newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
+
             else {
                String studioName;
                Country studioCountry;
@@ -356,10 +369,11 @@ public class Homework4Application {
                in.nextLine();
                studioName = in.nextLine();
                System.out.println("Please select the country the studio is in: ");
+
                int i = 1;
-               for (Country country : Country.values()) {
+               for (Country country : Country.values())
                   System.out.println((i++) + ". " + country.toString());
-               }
+
                countryNum = in.nextInt();
                if (countryNum == 1)
                   studioCountry = Country.US;
@@ -373,6 +387,7 @@ public class Homework4Application {
                   studioCountry = Country.JP;
 
                Studio newStudio = new Studio(studioName,studioCountry);
+
                try {
                   entityManager.persist(newStudio);
                   //entityManager.flush();
@@ -386,7 +401,9 @@ public class Homework4Application {
             }
             numOfStudios--;
          }
+
          newMovie.setStudios(newMovieStudios);
+
          for (Studio studio : newMovieStudios) {
             studio.addMovie(newMovie);
          }
@@ -395,11 +412,10 @@ public class Homework4Application {
       catch (Exception e) {
          //e.printStackTrace();
          System.out.println("Movie already exist");
-
       }
    }
    
-   private void loadInitialData(EntityManager manager) { 
+   private void start(EntityManager manager) {
 
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
@@ -428,13 +444,13 @@ public class Homework4Application {
 
          } else if (userInput == 2) {
             insertMovie(manager);
+
          } else if (userInput == 3) {
 
          } else if (userInput == 4) {
             System.out.println("Goodbye!");
             System.exit(0);
          }
-
       }
 
       while (userInput != 4);
