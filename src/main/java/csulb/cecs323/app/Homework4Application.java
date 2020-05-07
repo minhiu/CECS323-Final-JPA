@@ -16,6 +16,7 @@ import csulb.cecs323.model.*;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -64,10 +65,8 @@ public class Homework4Application {
          e.printStackTrace();
       }
 
-
       tx.commit();
       LOGGER.fine("End of Transaction");
-
    }
 
    /**
@@ -203,13 +202,6 @@ public class Homework4Application {
          entityManager.persist(movie);
          System.out.println(movie.getTitle());
       }
-      for (Movie movie : INITIAL_MOVIES) {
-         entityManager.persist(movie);
-         System.out.println(movie.getBudget());
-      }
-
-      entityManager.persist(new Movie("Spider-Man: ", new GregorianCalendar(2017, 7,7 ), MPAARating.PG13, 133, 175000000, 880200000,92));
-
       /**
        * Persist all Studios
        */
@@ -268,6 +260,7 @@ public class Homework4Application {
       }
       System.out.println();
    }
+
    private void runQueryThree(EntityManager manager) {
       Query query = manager.createNativeQuery("SELECT s.name, m.title, m.tomatoMeter\n" +
               "\tFROM Studios s INNER JOIN MovieStudios ms \n" +
