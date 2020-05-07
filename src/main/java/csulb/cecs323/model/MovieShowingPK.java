@@ -4,6 +4,10 @@ package csulb.cecs323.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+/**
+ * MovieShowingPK class created to establish a composite primary key for the MovieShowing class.
+ */
+
 @Embeddable
 
 public class MovieShowingPK implements Serializable{
@@ -18,7 +22,6 @@ public class MovieShowingPK implements Serializable{
         this.movieId=movieId;
         this.theaterId=theaterId;
     }
-
 
     public boolean equals(Object object)
     {

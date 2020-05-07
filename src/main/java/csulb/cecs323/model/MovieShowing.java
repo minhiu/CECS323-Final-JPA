@@ -2,7 +2,12 @@ package csulb.cecs323.model;
 
 import javax.persistence.*;
 import java.util.GregorianCalendar;
-
+/**
+ * MovieShowing class to model movie showings of a Movie database.
+ * A MovieShowing can show only one Movie, and be shown at only one Theater.
+ * In the case of Movies, a MovieShowing may be one of many movie showings to show the same movie.
+ * In the case of Theater, a MovieShowing may be one of many movie showings to be shown at the same theater.
+ */
 @Entity
 @Table(name="movieshowings")
 public class MovieShowing {

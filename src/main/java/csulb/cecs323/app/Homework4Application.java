@@ -15,6 +15,7 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 
 import javax.persistence.*;
+import java.sql.SQLOutput;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -58,21 +59,10 @@ public class Homework4Application {
 
          hw4application.persistData();
 
-         //hw4application.loadInitialData();
+         hw4application.loadInitialData(manager);
       } catch (Exception e) {
          e.printStackTrace();
       }
-
-
-
-      Query query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
-              " \t\tNumberOfCountries\n" +
-              " \tFROM movies m LEFT OUTER JOIN \n" +
-              "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
-              "ON m.id = ms.movie_Id \n" +
-              "\tGROUP by m.dateReleased, m.title\n");
-
-      List<Movie> results = query.getResultList();
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -83,7 +73,9 @@ public class Homework4Application {
     * Create Movie objects to the database.
     */
    public void createMovieEntity() {
-      // MAPPING MOVIES TO STUDIOS
+      /**
+       * MAPPING MOVIES TO STUDIOS
+       */
       IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
          if (i >= 0 && i <= 2 || i == 11) {
             INITIAL_MOVIES[i].addStudio(INITIAL_STUDIOS[0]);
@@ -98,7 +90,9 @@ public class Homework4Application {
          }
       });
 
-      // MAPPING MOVIES TO MOVIESHOWINGS
+      /**
+       * MAPPING MOVIES TO MOVIESHOWINGS
+       */
       IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
          if (i >= 0 && i <= 4) {
             INITIAL_MOVIES[i].addMovieShowing(INITIAL_MOVIESHOWING[i]);
@@ -111,7 +105,9 @@ public class Homework4Application {
          }
       });
 
-      // MAPPING SEQUEL (IRON MAN -> IRON MAN 2)
+      /**
+       * MAPPING SEQUEL (IRON MAN -> IRON MAN 2)
+       */
       INITIAL_MOVIES[5].setSequel(INITIAL_MOVIES[11]);
    }
 
@@ -119,7 +115,9 @@ public class Homework4Application {
     * Create Studio objects to the database.
     */
    public void createStudioEntity() {
-      // MAPPING STUDIOS TO MOVIES
+      /**
+       * MAPPING STUDIOS TO MOVIES
+       */
       IntStream.range(0, INITIAL_MOVIES.length).forEach(i -> {
          if (i >= 0 && i <= 2 || i == 12) {
             INITIAL_STUDIOS[0].addMovie(INITIAL_MOVIES[i]);
@@ -139,7 +137,9 @@ public class Homework4Application {
     * Create Theater objects to the database.
     */
    public void createTheaterEntity() {
-      // MAPPING THEATERS TO MOVIESHOWINGS
+      /**
+       * MAPPING THEATERS TO MOVIESHOWINGS
+       */
       IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
          if (i == 0 || i == 4 || i == 10) {
             INITIAL_THEATERS[0].addMovieShowing(INITIAL_MOVIESHOWING[i]);
@@ -159,7 +159,9 @@ public class Homework4Application {
     * Create Movie Showing objects to the database.
     */
    public void createMovieShowingEntity() {
-      // MAPPING MOVIESHOWINGS TO THEATERS
+      /**
+       * MAPPING MOVIESHOWINGS TO THEATERS
+       */
       IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
          if (i == 0 || i == 4 || i == 10) {
             INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[0]);
@@ -173,8 +175,9 @@ public class Homework4Application {
             INITIAL_MOVIESHOWING[i].setTheater(INITIAL_THEATERS[4]);
          }
       });
-
-      // MAPPING MOVIESHOWINGS TO MOVIES
+      /**
+       * MAPPING MOVIESHOWINGS TO MOVIES
+       */
       IntStream.range(0, INITIAL_MOVIESHOWING.length).forEach(i -> {
          if (i >= 0 && i <= 4) {
             INITIAL_MOVIESHOWING[i].setMovie(INITIAL_MOVIES[i]);
@@ -192,31 +195,41 @@ public class Homework4Application {
     * Persist all data
     */
    private void persistData() {
-      // PERSIST MOVIES
+      /**
+       * Persist all Movies
+       */
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);
       }
-      // PERSIST STUDIOS
+      /**
+       * Persist all Studios
+       */
       for (Studio studio : INITIAL_STUDIOS) {
          entityManager.persist(studio);
       }
-      // PERSIST THEATERS
+      /**
+       * Persist all Theaters
+       */
       for (Theater theater : INITIAL_THEATERS) {
          entityManager.persist(theater);
       }
-      // PERSIST MOVIESHOWINGS
+      /**
+       * Persist all MovieShowings
+       */
       for (MovieShowing movieShowing : INITIAL_MOVIESHOWING) {
          entityManager.persist(movieShowing);
       }
    }
 
-   private void loadInitialData() {
+   private void loadInitialData(EntityManager manager) {
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
+      Query query;
+      List<Object[]> queryResults;
 
+      System.out.println("Welcome to JPA by Group 6!");
       do {
-         System.out.println("Welcome to JPA by Group 6\n" +
-                 "Please select an option below:\n" +
+         System.out.println("Please select an option below:\n" +
                  "1. Run queries.\n" +
                  "2. Insert data into tables.\n" +
                  "3. Delete data from tables.\n" +
@@ -230,21 +243,76 @@ public class Homework4Application {
                     "2. Show all movies and the number of countries they are playing in\n" +
                     "3. Show all studio(s) that produced a movie with the lowest TomatoMeter score");
             userInputQuery = input.nextInt();
-            if (userInputQuery == 1) {
 
+            if (userInputQuery == 1) {
+               query = manager.createNativeQuery("SELECT s.name, MAX (m.budget) AS Maximum_Spent\n" +
+                       "FROM Studios s LEFT OUTER JOIN \n" +
+                       "(moviestudios ms INNER JOIN movies m ON m.id = ms.movie_Id)\n" +
+                       "ON s.id = ms.studio_Id\n" +
+                       "   \tGROUP BY s.name");
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i += 2) {
+                     System.out.printf("%2s %19s %2s %2s $%2d", "Studio name: ", obj[i] ,
+                             "|" , " Highest budget: ", obj[i+1]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
+
+            } else if (userInputQuery == 2) {
+               query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
+                       " \t\tNumberOfCountries\n" +
+                       " \tFROM movies m LEFT OUTER JOIN \n" +
+                       "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
+                       "ON m.id = ms.movie_Id \n" +
+                       "\tGROUP by m.dateReleased, m.title\n");
+
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i+=3) {
+                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s", "Date released: ", obj[i] ,
+                             "|" , " Title: ", obj[i+1], "|", " Country played: ", obj[i+2]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
+            } else if (userInputQuery == 3) {
+               query = manager.createNativeQuery("SELECT s.name, m.title, m.tomatoMeter\n" +
+                       "\tFROM Studios s INNER JOIN MovieStudios ms \n" +
+                       "ON s.id = ms.studio_Id\n" +
+                       "\t\t      INNER JOIN movies m \n" +
+                       "ON m.id = ms.movie_Id \n" +
+                       "\tWHERE tomatoMeter = (SELECT MIN(tomatoMeter)\n" +
+                       "FROM movies)");
+               queryResults = query.getResultList();
+
+               for (Object[] obj : queryResults) {
+                  for (int i = 0; i < obj.length; i += 3) {
+                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s%%", "Studio: ", obj[i], "|", " Title: ",
+                             obj[i+1], "|", " Tomato Score: ", obj[i+2]);
+                     System.out.println();
+                  }
+               }
+               System.out.println();
             }
          } else if (userInput == 2) {
 
          } else if (userInput == 3) {
 
-         }  {
-
+         } else if (userInput == 4) {
+            System.out.println("Goodbye!");
+            System.exit(0);
          }
       }
 
       while (userInput != 4);
    }
-
+   /**
+    * Movie objects to be loaded to the database initially.
+    */
    private static final Movie[] INITIAL_MOVIES = new Movie[]{
            new Movie("Ratatouille", new GregorianCalendar(2005, 0, 1), MPAARating.G, 111, 150000000, 620700000, 96),
            new Movie("Up", new GregorianCalendar(2009, 5, 29), MPAARating.G, 96, 175000000, 735100000, 98),
@@ -261,6 +329,9 @@ public class Homework4Application {
            new Movie("Spider-Man: Homecoming", new GregorianCalendar(2017, 7,7 ), MPAARating.PG13, 133, 175000000, 880200000, 92)
    };
 
+   /**
+    * Studio objects to be loaded to the database initially.
+    */
    private static final Studio[] INITIAL_STUDIOS = new Studio[]{
            new Studio("Marvel Studios", Country.US),
            new Studio("Warner Bros Studios", Country.US),
@@ -269,6 +340,9 @@ public class Homework4Application {
            new Studio("Columbia Pictures", Country.US)
    };
 
+   /**
+    * Theater objects to be loaded to the database initially.
+    */
    private static final Theater[] INITIAL_THEATERS = new Theater[]{
            new Theater("AMC Southbay Galleria", "Redondo Beach", "Western", Country.US, 16, "3107937477"),
            new Theater("Beckenham", "Beckenham", "Euro", Country.UK, 6, "08001383315"),
@@ -277,6 +351,9 @@ public class Homework4Application {
            new Theater("Toho Cinemas Roppongi Hills", "Tokyo", "Eastern", Country.JP, 5, "81357756090")
    };
 
+   /**
+    * MovieShowing objects to be loaded to the database initially.
+    */
    private static final MovieShowing[] INITIAL_MOVIESHOWING = new MovieShowing[]{
            new MovieShowing(new GregorianCalendar(2008, 5, 2), new GregorianCalendar(2008, 8, 2)), //iron man
            new MovieShowing(new GregorianCalendar(2018, 2, 16), new GregorianCalendar(2018, 5, 16)), //black panther
@@ -298,3 +375,4 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2017, 7, 7), new GregorianCalendar(2017, 10, 15))//SpiderMan: Homecoming
    };
 }
+

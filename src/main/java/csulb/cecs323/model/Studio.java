@@ -4,17 +4,22 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Studio class to model studios of a Movie database; a Studio can produce many movies.
+ * In the case of Movies, the Studio can be one of many Studios that produces the same Movie.
+ */
 @Entity
 @Table(name="studios", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Studio {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studioID;
+    private Long id;
 
     private String name;
     private Country country;
 
     @ManyToMany
-    @JoinTable(name = "moviestudios")
+    @JoinTable(name = "moviestudios", joinColumns = @JoinColumn(name = "studio_Id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_Id"))
     private List<Movie> movies =  new ArrayList<Movie>();
 
     public Studio(){
@@ -25,9 +30,9 @@ public class Studio {
         this.country = country;
     }
 
-    public Long getStudioID() { return studioID; }
+    public Long getStudioID() { return id; }
 
-    public void setStudioID(Long studioID) { this.studioID = studioID; }
+    public void setStudioID(Long studioID) { this.id = studioID; }
 
     public String getName() { return name; }
 

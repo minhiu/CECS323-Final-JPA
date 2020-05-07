@@ -3,7 +3,11 @@ package csulb.cecs323.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Theater class to model theaters of a Movie database.
+ * A theater can can show many MovieShowings.
+ * In the case of MovieShowings, only one Theater can show that MovieShowing.
+ */
 @Entity
 @Table(name = "theaters", uniqueConstraints = @UniqueConstraint(columnNames = "phone"))
 public class Theater {
