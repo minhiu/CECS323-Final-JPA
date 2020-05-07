@@ -47,4 +47,15 @@ public class Studio {
     public void setMovies(List<Movie> movies) { this.movies = movies; }
 
     public void addMovie(Movie movie) { this.movies.add(movie); }
+
+    public boolean equals(Object object)
+    {
+        if(object instanceof Studio){
+            Studio s = (Studio) object;
+            return name == s.name;
+        }
+        else{
+            return false;
+        }
+    }
 }

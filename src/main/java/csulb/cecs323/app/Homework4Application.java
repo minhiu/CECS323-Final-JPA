@@ -16,6 +16,7 @@ import csulb.cecs323.model.*;
 
 import javax.persistence.*;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.stream.IntStream;
  * This is for demonstration and educational purposes only.
  */
 public class Homework4Application {
+
    private EntityManager entityManager;
 
    private static final Logger LOGGER = Logger.getLogger(Homework4Application.class.getName());
@@ -200,7 +202,7 @@ public class Homework4Application {
        */
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);
-         System.out.println(movie.getTitle());
+         //System.out.println(movie.getTitle());
       }
       /**
        * Persist all Studios
@@ -285,25 +287,23 @@ public class Homework4Application {
    private void insertMovie(EntityManager manager) {
       Query query;
       Scanner in = new Scanner(System.in);
-      String movieName;
-      int year;
-      int month;
-      int dayOfMoth;
-      int ratingSelection;
-      MPAARating rating;
-      int runTime;
-      int budget;
-      int grossEarnings;
-      int tomatoMeter;
-      int numOfStudios;
-      int studioSelect;
+      String movieTitle; //Store user input for new movie's title
+      int year; //Store user input for new movie's year released
+      int month; //Store user input for new movie's month released
+      int dayOfMoth; //Store user input for new movie's day released
+      int ratingSelection; //Store user input for new movie's MPAA rating selection
+      MPAARating rating; //Store new movie enumerated value for MPAA rating based on user selection
+      int runTime; //Store user input for new movie's runtime
+      int budget; //Store user input for new movie's budget
+      int grossEarnings; //Store user input for new movie's gross earnings
+      int tomatoMeter; //Store user input for new movie's tomato meter rating
       System.out.print("Please enter a Movie Name: ");
-      movieName = in.nextLine();
+      movieTitle = in.nextLine();
       System.out.print("Please enter the year it released: ");
       year = in.nextInt();
       System.out.print("Please enter the month it released: ");
       month = in.nextInt();
-      System.out.print("Please enter the day it released:");
+      System.out.print("Please enter the day it released: ");
       dayOfMoth = in.nextInt();
       System.out.print("Select an MPAARating \n"
               +"1. G\n" +
@@ -317,80 +317,28 @@ public class Homework4Application {
       if (ratingSelection == 3) rating = MPAARating.PG13;
       if (ratingSelection == 4) rating = MPAARating.R;
       else rating = MPAARating.NC17;
-      System.out.print("Please enter the runtime for the movie:");
+      System.out.print("Please enter the runtime for the movie: ");
       runTime = in.nextInt();
-      System.out.print("Please enter the budget for the movie:");
+      System.out.print("Please enter the budget for the movie: ");
       budget = in.nextInt();
-      System.out.print("Please enter the gross earnings for the movie:");
+      System.out.print("Please enter the gross earnings for the movie: ");
       grossEarnings = in.nextInt();
-      System.out.print("Please enter the tomato meter rating for the movie:");
+      System.out.print("Please enter the tomato meter rating for the movie: ");
       tomatoMeter = in.nextInt();
-      Movie newMovie = new Movie (movieName, new GregorianCalendar(year, month, dayOfMoth), rating, runTime, budget, grossEarnings, tomatoMeter);
+      while(tomatoMeter < 0 || tomatoMeter >100) {
+         System.out.print("Please enter a value between 0 and 100: ");
+         tomatoMeter = in.nextInt();
+      }
+      Movie newMovie = new Movie (movieTitle, new GregorianCalendar(year, month, dayOfMoth), rating, runTime, budget, grossEarnings, tomatoMeter);
       newMovie.addStudio (INITIAL_STUDIOS[0]);
-
       try {
-
          entityManager.persist(newMovie);
-         query = manager.createNativeQuery("SELECT * FROM movies");
-         List<Object[]> list = query.getResultList();
-         //entityManager.flush();
+         entityManager.flush();
+         newMovie.getStudios().clear();
+//         query = manager.createNativeQuery("SELECT * FROM movies");
+//         List<Object[]> list = query.getResultList();
 
-         System.out.print("How many studios produced this movie? ");
-         numOfStudios = in.nextInt();
-
-         List<Studio> newMovieStudios = new ArrayList<>();
-
-         while (numOfStudios != 0) {
-            for (int i = 0 ; i < INITIAL_STUDIOS.length ; i ++) {
-               System.out.println((i+1) + ". " + INITIAL_STUDIOS[i].getName());
-            }
-            System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
-            studioSelect = in.nextInt();
-            if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
-               newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
-            else {
-               String studioName;
-               Country studioCountry;
-               int countryNum;
-               System.out.print("Please enter the studio name: ");
-               in.nextLine();
-               studioName = in.nextLine();
-               System.out.println("Please select the country the studio is in: ");
-               int i = 1;
-               for (Country country : Country.values()) {
-                  System.out.println((i++) + ". " + country.toString());
-               }
-               countryNum = in.nextInt();
-               if (countryNum == 1)
-                  studioCountry = Country.US;
-               if (countryNum == 2)
-                  studioCountry = Country.UK;
-               if (countryNum == 3)
-                  studioCountry = Country.CA;
-               if (countryNum == 4)
-                  studioCountry = Country.MX;
-               else
-                  studioCountry = Country.JP;
-
-               Studio newStudio = new Studio(studioName,studioCountry);
-               try {
-                  entityManager.persist(newStudio);
-                  //entityManager.flush();
-                  newMovieStudios.add(newStudio);
-               } catch (Exception e)
-               {
-                  //e.printStackTrace();
-                  //System.out.println("This studio already exisit");
-                  //continue;
-               }
-            }
-            numOfStudios--;
-         }
-         newMovie.setStudios(newMovieStudios);
-         for (Studio studio : newMovieStudios) {
-            studio.addMovie(newMovie);
-         }
-         entityManager.persist(newMovie);
+         assignStudioToNewMovie(manager, newMovie);
       }
       catch (Exception e) {
          //e.printStackTrace();
@@ -398,8 +346,72 @@ public class Homework4Application {
 
       }
    }
-   
-   private void loadInitialData(EntityManager manager) { 
+
+   public void assignStudioToNewMovie (EntityManager manager,Movie newMovie){
+      Scanner in = new Scanner(System.in);
+      int numOfStudios;
+      int studioSelect;
+      System.out.print("How many studios produced this movie? ");
+      numOfStudios = in.nextInt();
+      List<Studio> newMovieStudios = new ArrayList<>();
+      while (numOfStudios != 0) {
+         System.out.println("Please select a studio below: ");
+         for (int i = 0 ; i < INITIAL_STUDIOS.length ; i ++) {
+            System.out.println((i+1) + ". " + INITIAL_STUDIOS[i].getName());
+         }
+         System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
+         studioSelect = in.nextInt();
+         if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
+            newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
+         else {
+            try{
+               insertNewStudio(manager,newMovieStudios);
+            } catch (Exception e) {
+               e.printStackTrace();
+               System.out.println("This studio already exist");
+               numOfStudios++;
+               //continue;
+            }
+         }
+         numOfStudios--;
+      }
+      newMovie.setStudios(newMovieStudios);
+      for (Studio studio : newMovieStudios) {
+         studio.addMovie(newMovie);
+      }
+      //entityManager.persist(newMovie);
+   }
+
+   private void insertNewStudio(EntityManager manager, List<Studio> newMovieStudios){
+      Scanner in = new Scanner(System.in);
+      String studioName;
+      Country studioCountry;
+      int countryNum;
+      System.out.print("Please enter the studio name: ");
+      studioName = in.nextLine();
+      System.out.println("Please select the country the studio is in: ");
+      int i = 1;
+      for (Country country : Country.values()) {
+         System.out.println((i++) + ". " + country.toString());
+      }
+      countryNum = in.nextInt();
+      if (countryNum == 1)
+         studioCountry = Country.US;
+      if (countryNum == 2)
+         studioCountry = Country.UK;
+      if (countryNum == 3)
+         studioCountry = Country.CA;
+      if (countryNum == 4)
+         studioCountry = Country.MX;
+      else
+         studioCountry = Country.JP;
+      Studio newStudio = new Studio(studioName,studioCountry);
+      entityManager.persist(newStudio);
+      entityManager.flush();
+      newMovieStudios.add(newStudio);
+   }
+
+   private void loadInitialData(EntityManager manager) {
 
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
@@ -412,9 +424,7 @@ public class Homework4Application {
                  "2. Insert Movie into tables.\n" +
                  "3. Delete data from tables.\n" +
                  "4. Exit the application.");
-
          userInput = input.nextInt();
-
          if (userInput == 1) {
             System.out.println("Select one of these 3 queries:\n" +
                     "1. Show all studios and the highest budget that they spent on a single movie.\n" +
