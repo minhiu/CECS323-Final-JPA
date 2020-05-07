@@ -13,6 +13,7 @@
 package csulb.cecs323.app;
 
 import csulb.cecs323.model.*;
+import org.apache.derby.iapi.store.raw.Transaction;
 
 import javax.persistence.*;
 
@@ -61,13 +62,20 @@ public class Homework4Application {
          hw4application.createMovieShowingEntity();
          hw4application.persistData();
 
-         hw4application.start(manager);
-
       } catch (Exception e) {
          e.printStackTrace();
       }
 
       tx.commit();
+
+      tx.begin();
+      try {
+         hw4application.start(manager, tx);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      tx.commit();
+
       LOGGER.fine("End of Transaction");
    }
 
@@ -283,7 +291,8 @@ public class Homework4Application {
       System.out.println();
    }
 
-   private void insertMovie(EntityManager manager) {
+   private void insertMovie(EntityManager manager, EntityTransaction tx) {
+      EntityTransaction movieTx = manager.getTransaction();
       Query query;
       Scanner in = new Scanner(System.in);
 
@@ -337,31 +346,28 @@ public class Homework4Application {
       System.out.print("Please enter the tomato meter rating for the movie: ");
       tomatoMeter = in.nextInt();
 
-      while(tomatoMeter < 0 || tomatoMeter >100) {
+      while(tomatoMeter < 0 || tomatoMeter > 100) {
          System.out.print("Please enter a value between 0 and 100: ");
          tomatoMeter = in.nextInt();
       }
 
       Movie newMovie = new Movie (movieTitle, new GregorianCalendar(year, month, dayOfMoth), rating, runTime, budget, grossEarnings, tomatoMeter);
 
-      newMovie.addStudio (INITIAL_STUDIOS[0]);
+      newMovie.addStudio(INITIAL_STUDIOS[0]);
       try {
          entityManager.persist(newMovie);
          entityManager.flush();
          newMovie.getStudios().clear();
-//         query = manager.createNativeQuery("SELECT * FROM movies");
-//         List<Object[]> list = query.getResultList();
-
          assignStudioToNewMovie(manager, newMovie);
       }
       catch (Exception e) {
          //e.printStackTrace();
-         System.out.println("Movie already exist");
-
+         System.out.println("Movie already exist. Please enter all movies again.");
+         tx.rollback();
       }
    }
 
-   public void assignStudioToNewMovie (EntityManager manager,Movie newMovie) {
+   public void assignStudioToNewMovie (EntityManager manager, Movie newMovie) {
       Scanner in = new Scanner(System.in);
 
       int numOfStudios;
@@ -430,7 +436,7 @@ public class Homework4Application {
       newMovieStudios.add(newStudio);
    }
 
-   private void start(EntityManager manager) {
+   private void start(EntityManager manager, EntityTransaction tx) {
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
       Query query;
@@ -459,7 +465,7 @@ public class Homework4Application {
             else if (userInputQuery == 3) { runQueryThree(manager); }
 
          } else if (userInput == 2) {
-            insertMovie(manager);
+            insertMovie(manager, tx);
 
          } else if (userInput == 3) {
 
