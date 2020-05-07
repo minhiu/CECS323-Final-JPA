@@ -15,6 +15,7 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 
 import javax.persistence.*;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -55,20 +56,14 @@ public class Homework4Application {
          hw4application.createStudioEntity();
          hw4application.createTheaterEntity();
          hw4application.createMovieShowingEntity();
-
          hw4application.persistData();
-         Query query = manager.createNativeQuery("SELECT * FROM movies");
-         List<Object[]> list = query.getResultList();
-         for (Object[] o : list) {
-            for (Object obj : o)
-               System.out.print(obj + " ");
-            System.out.println();
-         }
 
          hw4application.loadInitialData(manager);
+
       } catch (Exception e) {
          e.printStackTrace();
       }
+
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -235,6 +230,7 @@ public class Homework4Application {
       }
    }
 
+
    private void runQueryOne(EntityManager manager) {
       Query query = manager.createNativeQuery("SELECT s.name, MAX (m.budget) AS Maximum_Spent\n" +
               "FROM Studios s LEFT OUTER JOIN \n" +
@@ -293,7 +289,125 @@ public class Homework4Application {
       System.out.println();
    }
 
-   private void loadInitialData(EntityManager manager) {
+   private void insertMovie(EntityManager manager) {
+      Query query;
+      Scanner in = new Scanner(System.in);
+      String movieName;
+      int year;
+      int month;
+      int dayOfMoth;
+      int ratingSelection;
+      MPAARating rating;
+      int runTime;
+      int budget;
+      int grossEarnings;
+      int tomatoMeter;
+      int numOfStudios;
+      int studioSelect;
+      System.out.print("Please enter a Movie Name: ");
+      movieName = in.nextLine();
+      System.out.print("Please enter the year it released: ");
+      year = in.nextInt();
+      System.out.print("Please enter the month it released: ");
+      month = in.nextInt();
+      System.out.print("Please enter the day it released:");
+      dayOfMoth = in.nextInt();
+      System.out.print("Select an MPAARating \n"
+              +"1. G\n" +
+              "2. PG\n" +
+              "3. PG13\n" +
+              "4. R\n" +
+              "5. NC17\n");
+      ratingSelection = in.nextInt();
+      if (ratingSelection == 1) rating = MPAARating.G;
+      if (ratingSelection == 2) rating = MPAARating.PG;
+      if (ratingSelection == 3) rating = MPAARating.PG13;
+      if (ratingSelection == 4) rating = MPAARating.R;
+      else rating = MPAARating.NC17;
+      System.out.print("Please enter the runtime for the movie:");
+      runTime = in.nextInt();
+      System.out.print("Please enter the budget for the movie:");
+      budget = in.nextInt();
+      System.out.print("Please enter the gross earnings for the movie:");
+      grossEarnings = in.nextInt();
+      System.out.print("Please enter the tomato meter rating for the movie:");
+      tomatoMeter = in.nextInt();
+      Movie newMovie = new Movie (movieName, new GregorianCalendar(year, month, dayOfMoth), rating, runTime, budget, grossEarnings, tomatoMeter);
+      newMovie.addStudio (INITIAL_STUDIOS[0]);
+
+      try {
+
+         entityManager.persist(newMovie);
+         query = manager.createNativeQuery("SELECT * FROM movies");
+         List<Object[]> list = query.getResultList();
+         //entityManager.flush();
+
+         System.out.print("How many studios produced this movie? ");
+         numOfStudios = in.nextInt();
+
+         List<Studio> newMovieStudios = new ArrayList<>();
+
+         while (numOfStudios != 0) {
+            for (int i = 0 ; i < INITIAL_STUDIOS.length ; i ++) {
+               System.out.println((i+1) + ". " + INITIAL_STUDIOS[i].getName());
+            }
+            System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
+            studioSelect = in.nextInt();
+            if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
+               newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
+            else {
+               String studioName;
+               Country studioCountry;
+               int countryNum;
+               System.out.print("Please enter the studio name: ");
+               in.nextLine();
+               studioName = in.nextLine();
+               System.out.println("Please select the country the studio is in: ");
+               int i = 1;
+               for (Country country : Country.values()) {
+                  System.out.println((i++) + ". " + country.toString());
+               }
+               countryNum = in.nextInt();
+               if (countryNum == 1)
+                  studioCountry = Country.US;
+               if (countryNum == 2)
+                  studioCountry = Country.UK;
+               if (countryNum == 3)
+                  studioCountry = Country.CA;
+               if (countryNum == 4)
+                  studioCountry = Country.MX;
+               else
+                  studioCountry = Country.JP;
+
+               Studio newStudio = new Studio(studioName,studioCountry);
+               try {
+                  entityManager.persist(newStudio);
+                  //entityManager.flush();
+                  newMovieStudios.add(newStudio);
+               } catch (Exception e)
+               {
+                  //e.printStackTrace();
+                  //System.out.println("This studio already exisit");
+                  //continue;
+               }
+            }
+            numOfStudios--;
+         }
+         newMovie.setStudios(newMovieStudios);
+         for (Studio studio : newMovieStudios) {
+            studio.addMovie(newMovie);
+         }
+         entityManager.persist(newMovie);
+      }
+      catch (Exception e) {
+         //e.printStackTrace();
+         System.out.println("Movie already exist");
+
+      }
+   }
+   
+   private void loadInitialData(EntityManager manager) { 
+
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
       Query query;
@@ -302,7 +416,7 @@ public class Homework4Application {
       do {
          System.out.println("Please select an option below:\n" +
                  "1. Run queries.\n" +
-                 "2. Insert data into tables.\n" +
+                 "2. Insert Movie into tables.\n" +
                  "3. Delete data from tables.\n" +
                  "4. Exit the application.");
 
@@ -320,17 +434,20 @@ public class Homework4Application {
             else if (userInputQuery == 3) { runQueryThree(manager); }
 
          } else if (userInput == 2) {
-
+            insertMovie(manager);
          } else if (userInput == 3) {
 
          } else if (userInput == 4) {
             System.out.println("Goodbye!");
             System.exit(0);
          }
+
       }
 
       while (userInput != 4);
    }
+
+
    /**
     * Movie objects to be loaded to the database initially.
     */
@@ -395,5 +512,7 @@ public class Homework4Application {
            new MovieShowing(new GregorianCalendar(2010, 4, 26), new GregorianCalendar(2010, 7, 5)), //iron man 2 
            new MovieShowing(new GregorianCalendar(2017, 7, 7), new GregorianCalendar(2017, 10, 15))//SpiderMan: Homecoming
    };
+
+
 }
 
