@@ -361,7 +361,7 @@ public class Homework4Application {
       }
    }
 
-   public void assignStudioToNewMovie (EntityManager manager,Movie newMovie){
+   public void assignStudioToNewMovie (EntityManager manager,Movie newMovie) {
       Scanner in = new Scanner(System.in);
 
       int numOfStudios;
@@ -374,8 +374,8 @@ public class Homework4Application {
 
       while (numOfStudios != 0) {
          System.out.println("Please select a studio below: ");
-         for (int i = 0 ; i < INITIAL_STUDIOS.length ; i ++) {
-            System.out.println((i+1) + ". " + INITIAL_STUDIOS[i].getName());
+         for (int i = 0; i < INITIAL_STUDIOS.length; i++) {
+            System.out.println((i + 1) + ". " + INITIAL_STUDIOS[i].getName());
          }
          System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
 
@@ -383,8 +383,8 @@ public class Homework4Application {
          if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
             newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
          else {
-            try{
-               insertNewStudio(manager,newMovieStudios);
+            try {
+               insertNewStudio(manager, newMovieStudios);
             } catch (Exception e) {
                e.printStackTrace();
                System.out.println("This studio already exist");
@@ -394,6 +394,7 @@ public class Homework4Application {
          }
          numOfStudios--;
       }
+   }
 
    private void insertNewStudio(EntityManager manager, List<Studio> newMovieStudios){
       Scanner in = new Scanner(System.in);
