@@ -221,6 +221,64 @@ public class Homework4Application {
       }
    }
 
+   private void runQueryOne(EntityManager manager) {
+      Query query = manager.createNativeQuery("SELECT s.name, MAX (m.budget) AS Maximum_Spent\n" +
+              "FROM Studios s LEFT OUTER JOIN \n" +
+              "(moviestudios ms INNER JOIN movies m ON m.id = ms.movie_Id)\n" +
+              "ON s.id = ms.studio_Id\n" +
+              "   \tGROUP BY s.name");
+      List<Object[]> queryResults = query.getResultList();
+
+      for (Object[] obj : queryResults) {
+         for (int i = 0; i < obj.length; i += 2) {
+            System.out.printf("%2s %19s %2s %2s $%2d", "Studio name: ", obj[i] ,
+                    "|" , " Highest budget: ", obj[i+1]);
+            System.out.println();
+         }
+      }
+      System.out.println();
+   }
+
+   private void runQueryTwo(EntityManager manager) {
+      Query query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
+              " \t\tNumberOfCountries\n" +
+              " \tFROM movies m LEFT OUTER JOIN \n" +
+              "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
+              "ON m.id = ms.movie_Id \n" +
+              "\tGROUP by m.dateReleased, m.title\n");
+
+      List<Object[]> queryResults = query.getResultList();
+
+      for (Object[] obj : queryResults) {
+         for (int i = 0; i < obj.length; i+=3) {
+            System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s", "Date released: ", obj[i] ,
+                    "|" , " Title: ", obj[i+1], "|", " Country played: ", obj[i+2]);
+            System.out.println();
+         }
+      }
+      System.out.println();
+   }
+   private void runQueryThree(EntityManager manager) {
+      Query query = manager.createNativeQuery("SELECT s.name, m.title, m.tomatoMeter\n" +
+              "\tFROM Studios s INNER JOIN MovieStudios ms \n" +
+              "ON s.id = ms.studio_Id\n" +
+              "\t\t      INNER JOIN movies m \n" +
+              "ON m.id = ms.movie_Id \n" +
+              "\tWHERE tomatoMeter = (SELECT MIN(tomatoMeter)\n" +
+              "FROM movies)");
+      List<Object[]> queryResults = query.getResultList();
+
+      for (Object[] obj : queryResults) {
+         for (int i = 0; i < obj.length; i += 3) {
+            System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s%%", "Studio: ", obj[i], "|", " Title: ",
+                    obj[i + 1], "|", " Tomato Score: ", obj[i + 2]);
+            System.out.println();
+         }
+      }
+
+      System.out.println();
+   }
+
    private void loadInitialData(EntityManager manager) {
       Scanner input = new Scanner(System.in);
       int userInput, userInputQuery;
@@ -244,60 +302,10 @@ public class Homework4Application {
                     "3. Show all studio(s) that produced a movie with the lowest TomatoMeter score");
             userInputQuery = input.nextInt();
 
-            if (userInputQuery == 1) {
-               query = manager.createNativeQuery("SELECT s.name, MAX (m.budget) AS Maximum_Spent\n" +
-                       "FROM Studios s LEFT OUTER JOIN \n" +
-                       "(moviestudios ms INNER JOIN movies m ON m.id = ms.movie_Id)\n" +
-                       "ON s.id = ms.studio_Id\n" +
-                       "   \tGROUP BY s.name");
-               queryResults = query.getResultList();
+            if (userInputQuery == 1) { runQueryOne(manager); }
+            else if (userInputQuery == 2) { runQueryTwo(manager); }
+            else if (userInputQuery == 3) { runQueryThree(manager); }
 
-               for (Object[] obj : queryResults) {
-                  for (int i = 0; i < obj.length; i += 2) {
-                     System.out.printf("%2s %19s %2s %2s $%2d", "Studio name: ", obj[i] ,
-                             "|" , " Highest budget: ", obj[i+1]);
-                     System.out.println();
-                  }
-               }
-               System.out.println();
-
-            } else if (userInputQuery == 2) {
-               query = manager.createNativeQuery("SELECT m.dateReleased, m.title, COUNT (DISTINCT COUNTRY) AS \n" +
-                       " \t\tNumberOfCountries\n" +
-                       " \tFROM movies m LEFT OUTER JOIN \n" +
-                       "(movieShowings ms INNER JOIN theaters t ON ms.theater_Id = t.id)\n" +
-                       "ON m.id = ms.movie_Id \n" +
-                       "\tGROUP by m.dateReleased, m.title\n");
-
-               queryResults = query.getResultList();
-
-               for (Object[] obj : queryResults) {
-                  for (int i = 0; i < obj.length; i+=3) {
-                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s", "Date released: ", obj[i] ,
-                             "|" , " Title: ", obj[i+1], "|", " Country played: ", obj[i+2]);
-                     System.out.println();
-                  }
-               }
-               System.out.println();
-            } else if (userInputQuery == 3) {
-               query = manager.createNativeQuery("SELECT s.name, m.title, m.tomatoMeter\n" +
-                       "\tFROM Studios s INNER JOIN MovieStudios ms \n" +
-                       "ON s.id = ms.studio_Id\n" +
-                       "\t\t      INNER JOIN movies m \n" +
-                       "ON m.id = ms.movie_Id \n" +
-                       "\tWHERE tomatoMeter = (SELECT MIN(tomatoMeter)\n" +
-                       "FROM movies)");
-               queryResults = query.getResultList();
-
-               for (Object[] obj : queryResults) {
-                  for (int i = 0; i < obj.length; i += 3) {
-                     System.out.printf("%2s %2s %2s %2s %28s %2s %2s %2s%%", "Studio: ", obj[i], "|", " Title: ",
-                             obj[i+1], "|", " Tomato Score: ", obj[i+2]);
-                     System.out.println();
-                  }
-               }
-               System.out.println();
-            }
          } else if (userInput == 2) {
 
          } else if (userInput == 3) {
