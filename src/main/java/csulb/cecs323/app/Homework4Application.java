@@ -15,7 +15,6 @@ package csulb.cecs323.app;
 import csulb.cecs323.model.*;
 
 import javax.persistence.*;
-import java.sql.SQLOutput;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -58,6 +57,13 @@ public class Homework4Application {
          hw4application.createMovieShowingEntity();
 
          hw4application.persistData();
+         Query query = manager.createNativeQuery("SELECT * FROM movies");
+         List<Object[]> list = query.getResultList();
+         for (Object[] o : list) {
+            for (Object obj : o)
+               System.out.print(obj + " ");
+            System.out.println();
+         }
 
          hw4application.loadInitialData(manager);
       } catch (Exception e) {
@@ -200,7 +206,15 @@ public class Homework4Application {
        */
       for (Movie movie : INITIAL_MOVIES) {
          entityManager.persist(movie);
+         System.out.println(movie.getTitle());
       }
+      for (Movie movie : INITIAL_MOVIES) {
+         entityManager.persist(movie);
+         System.out.println(movie.getBudget());
+      }
+
+      entityManager.persist(new Movie("Spider-Man: ", new GregorianCalendar(2017, 7,7 ), MPAARating.PG13, 133, 175000000, 880200000,92));
+
       /**
        * Persist all Studios
        */
@@ -284,7 +298,6 @@ public class Homework4Application {
       int userInput, userInputQuery;
       Query query;
       List<Object[]> queryResults;
-
       System.out.println("Welcome to JPA by Group 6!");
       do {
          System.out.println("Please select an option below:\n" +
@@ -334,7 +347,7 @@ public class Homework4Application {
            new Movie("Captain Marvel", new GregorianCalendar(2019, 3, 8), MPAARating.PG13, 124, 1750000, 1128000000, 78),
            new Movie("Murder on the Orient Express", new GregorianCalendar(2017, 11, 10), MPAARating.PG13, 114, 55000000, 352800000, 61),
            new Movie("Iron Man 2", new GregorianCalendar(2010, 4, 26), MPAARating.PG13, 119, 200000000, 623900000, 73),
-           new Movie("Spider-Man: Homecoming", new GregorianCalendar(2017, 7,7 ), MPAARating.PG13, 133, 175000000, 880200000, 92)
+           new Movie("Spider-Man: Homecoming", new GregorianCalendar(2017, 7,7 ), MPAARating.PG13, 133, 175000000, 880200000,92)
    };
 
    /**
