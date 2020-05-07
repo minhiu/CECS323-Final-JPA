@@ -386,11 +386,12 @@ public class Homework4Application {
          System.out.println((INITIAL_STUDIOS.length + 1) + ". New Studio");
 
          studioSelect = in.nextInt();
-         if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0)
+         if (studioSelect <= INITIAL_STUDIOS.length && studioSelect > 0) {
             newMovieStudios.add(INITIAL_STUDIOS[studioSelect - 1]);
-         else {
+            INITIAL_STUDIOS[studioSelect - 1].addMovie(newMovie);
+         } else {
             try {
-               insertNewStudio(manager, newMovieStudios);
+               insertNewStudio(manager, newMovieStudios, newMovie);
             } catch (Exception e) {
                e.printStackTrace();
                System.out.println("This studio already exist");
@@ -400,9 +401,10 @@ public class Homework4Application {
          }
          numOfStudios--;
       }
+      newMovie.setStudios(newMovieStudios);
    }
 
-   private void insertNewStudio(EntityManager manager, List<Studio> newMovieStudios){
+   private void insertNewStudio(EntityManager manager, List<Studio> newMovieStudios, Movie newMovie){
       Scanner in = new Scanner(System.in);
       String studioName;
       Country studioCountry;
@@ -431,6 +433,7 @@ public class Homework4Application {
       else
          studioCountry = Country.JP;
       Studio newStudio = new Studio(studioName,studioCountry);
+      newStudio.addMovie(newMovie);
       entityManager.persist(newStudio);
       entityManager.flush();
       newMovieStudios.add(newStudio);
