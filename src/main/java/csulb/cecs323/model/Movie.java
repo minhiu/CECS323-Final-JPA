@@ -29,10 +29,10 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private List<MovieShowing> movieshowings = new ArrayList<MovieShowing>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="sequel", unique=true)
     private Movie sequel;
 

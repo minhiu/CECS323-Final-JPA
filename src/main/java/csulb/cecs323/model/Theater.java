@@ -21,7 +21,7 @@ public class Theater {
     private Country country;
     private int numberOfScreens;
     private String phone;
-    @OneToMany(mappedBy = "theater", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MovieShowing> movieShowings = new ArrayList<MovieShowing>();
 
     public Theater(){}

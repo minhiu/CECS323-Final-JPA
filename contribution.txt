@@ -1,0 +1,12 @@
+Contribution
+Group 6
+Hieu Pham
+Hoang Nguyen
+Matt Ortiz
+
+Hieu and Hoang worked together on creating the 6 Queries with the help of Matt. We all did the Relational Database together. Hieu constructed the Movie class, Hoang constructed Theater and MovieShowing, and Matt created Studio. We added all the initial data together. Hieu and Hoang worked together to finish part 3 of the homework, which is the JPA. While we both worked together, Hieu spent extra time to improve efficiency for Part 3c.i, while Hoang improved part 3c.ii on his own time. We went through a lot of errors and difficulties but thankfully with your help, Google and students on Piazza, we made through it. Hoang added all the JavaDoc comments, added extra functions to make the code efficient and cohesive. Hieu reduced the length of blocks of codes and lines to make the codes cleaner, fixed all the indentations issue and helped Matt fixing the SQL queries in part 2.
+
+Points:
+Hieu - 40
+Hoang - 40
+Matt - 20

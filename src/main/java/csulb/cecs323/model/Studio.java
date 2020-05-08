@@ -20,7 +20,7 @@ public class Studio {
     private String name;
     private Country country;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "moviestudios", joinColumns = @JoinColumn(name = "studio_Id"),
             inverseJoinColumns = @JoinColumn(name = "movie_Id"))
     private List<Movie> movies =  new ArrayList<Movie>();
@@ -51,13 +51,11 @@ public class Studio {
 
     public void addMovie(Movie movie) { this.movies.add(movie); }
 
-    public boolean equals(Object object)
-    {
-        if(object instanceof Studio){
+    public boolean equals(Object object) {
+        if(object instanceof Studio) {
             Studio s = (Studio) object;
             return name == s.name;
-        }
-        else{
+        } else {
             return false;
         }
     }
