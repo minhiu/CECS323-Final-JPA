@@ -10,7 +10,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="studios", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@NamedQuery(name= Studio.FIND_STUDIO, query = "SELECT s.name FROM Studio s WHERE s.name=:name")
 public class Studio {
+    public static final String FIND_STUDIO = "Studio.findMovie";
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

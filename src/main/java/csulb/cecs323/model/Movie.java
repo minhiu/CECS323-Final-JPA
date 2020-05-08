@@ -13,7 +13,9 @@ import java.util.GregorianCalendar;
  */
 @Entity
 @Table(name="movies", uniqueConstraints = @UniqueConstraint(columnNames = {"title", "dateReleased"}))
+@NamedQuery(name= Movie.FIND_MOVIE, query = "SELECT m.title FROM Movie m WHERE m.title=:title AND m.dateReleased=:dateReleased")
 public class Movie {
+    public static final String FIND_MOVIE = "Movie.findMovie";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -27,7 +29,7 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateReleased;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
     private List<MovieShowing> movieshowings = new ArrayList<MovieShowing>();
 
     @OneToOne
