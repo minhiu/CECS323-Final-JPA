@@ -461,7 +461,7 @@ public class Homework4Application {
       TypedQuery<Studio> findStudio = entityManager.createNamedQuery(Studio.FIND_STUDIO, Studio.class);
       findStudio.setParameter("name",studioName);
       int resultCounter = findStudio.getResultList().size();
-      if(resultCounter == 0) {
+      if (resultCounter == 0) {
          System.out.println("Please select the country the studio is in: ");
          int i = 1;
          for (Country country : Country.values()) {
