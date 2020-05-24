@@ -20,7 +20,7 @@ public class Studio {
     private String name;
     private Country country;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "moviestudios", joinColumns = @JoinColumn(name = "studio_Id"),
             inverseJoinColumns = @JoinColumn(name = "movie_Id"))
     private List<Movie> movies =  new ArrayList<Movie>();

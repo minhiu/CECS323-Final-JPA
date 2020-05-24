@@ -406,22 +406,30 @@ public class Homework4Application {
 
       List<Studio> newMovieStudios = new ArrayList<>();
 
-      Query query = manager.createNativeQuery("SELECT * FROM studios");
-      List<Object[]> studioList = query.getResultList();
-
       while (numOfStudios != 0) {
-         System.out.println("Please select a studio ID below: ");
+         Query query = manager.createNativeQuery("SELECT * FROM studios");
+         List<Object[]> studioList = query.getResultList();
+
+         List<Long> allIDs = new ArrayList<>();
+         for (Object[] objects : studioList) {
+            for (int i = 0; i < objects.length; i+=3) {
+               allIDs.add((Long)objects[i]);
+            }
+         }
+         long maxID = allIDs.get(allIDs.size() - 1);
+
+                 System.out.println("Please select a studio ID below: ");
          for (Object[] objects : studioList) {
             for (int i = 0; i < objects.length; i += 3) {
                System.out.print("ID: " + objects[i] + " | Name: " + objects[i + 2]);
             }
             System.out.println();
          }
-         System.out.println("Or Press " + (studioList.size() + 1) + " to create a New Studio");
+         System.out.println("Or Press " + (maxID + 1) + " to create a New Studio");
 
          studioNum = input.nextInt();
 
-         if (studioNum <= studioList.size() && studioNum > 0) {
+         if (allIDs.contains(studioNum)) {
             Studio studioObj = manager.find(Studio.class, studioNum);
             if (newMovieStudios.contains(studioObj) == false) {
                newMovieStudios.add(studioObj);
@@ -431,15 +439,17 @@ public class Homework4Application {
                System.out.println("Duplicated Studio. Please re-enter a different studio!");
                numOfStudios++;
             }
-         } else {
+         } else if (studioNum == (maxID + 1)) {
             insertNewStudio(manager, newMovieStudios, newMovie);
             if (newMovieStudios.size() == 0) {
                numOfStudios++;
             }
+         } else {
+            numOfStudios++;
          }
          numOfStudios--;
-         newMovie.setStudios(newMovieStudios);
       }
+      newMovie.setStudios(newMovieStudios);
    }
 
    /**
@@ -486,8 +496,8 @@ public class Homework4Application {
 
          entityManager.persist(newStudio);
          entityManager.flush();
-         newStudio.addMovie(newMovie);
          newMovieStudios.add(newStudio);
+         newStudio.addMovie(newMovie);
          System.out.println("Studio added.");
       }
       else {
